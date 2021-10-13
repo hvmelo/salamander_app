@@ -1,0 +1,39 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_shopping_cart/data/mock_wallet_repository.dart';
+import 'package:flutter_shopping_cart/wallet/cubit/wallet_cubit.dart';
+import 'package:flutter_shopping_cart/wallet/view/wallet_page.dart';
+
+class App extends StatelessWidget {
+  const App({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Salamander',
+      initialRoute: '/',
+      routes: {
+        '/': (context) {
+          return BlocProvider(
+            create: (context) =>
+                WalletCubit(MockWalletRepository())..startSyncing(),
+            child: WalletPage(),
+          );
+        },
+      },
+      theme: ThemeData(
+        outlinedButtonTheme: OutlinedButtonThemeData(
+          style: OutlinedButton.styleFrom(
+            primary: Colors.blue.shade300,
+            padding: const EdgeInsets.all(14),
+            //side: const BorderSide(color: Colors.white60),
+            //shape: const StadiumBorder(),
+            textStyle: const TextStyle(
+              fontSize: 16,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
