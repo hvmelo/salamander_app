@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_shopping_cart/wallet/cubit/wallet_cubit.dart';
 
 class WalletActions extends StatelessWidget {
   const WalletActions({Key? key}) : super(key: key);

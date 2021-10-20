@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_shopping_cart/wallet/cubit/wallet_cubit.dart';
+import 'package:salamander_app/wallet/cubit/wallet_cubit.dart';
 
 class WalletRefresh extends StatelessWidget {
   const WalletRefresh({Key? key}) : super(key: key);

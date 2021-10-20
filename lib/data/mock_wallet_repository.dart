@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:math';
 
-import 'package:flutter_shopping_cart/data/wallet_repository.dart';
+import 'package:salamander_app/data/wallet_repository.dart';
 
 class MockWalletRepository implements WalletRepository {
   final _random = Random();

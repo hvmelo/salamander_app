@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_shopping_cart/wallet/view/widgets/wallet_actions.dart';
-import 'package:flutter_shopping_cart/wallet/view/widgets/wallet_balance.dart';
-import 'package:flutter_shopping_cart/wallet/view/widgets/wallet_currency.dart';
-import 'package:flutter_shopping_cart/wallet/view/widgets/wallet_refresh.dart';
+import 'package:salamander_app/wallet/view/widgets/wallet_actions.dart';
+import 'package:salamander_app/wallet/view/widgets/wallet_balance.dart';
+import 'package:salamander_app/wallet/view/widgets/wallet_currency.dart';
+import 'package:salamander_app/wallet/view/widgets/wallet_refresh.dart';
 
 class WalletPage extends StatelessWidget {
   @override

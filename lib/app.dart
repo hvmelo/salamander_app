@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_shopping_cart/data/mock_wallet_repository.dart';
-import 'package:flutter_shopping_cart/wallet/cubit/wallet_cubit.dart';
-import 'package:flutter_shopping_cart/wallet/view/wallet_page.dart';
+import 'package:salamander_app/data/mock_wallet_repository.dart';
+import 'package:salamander_app/wallet/cubit/wallet_cubit.dart';
+import 'package:salamander_app/wallet/view/wallet_page.dart';
 
 class App extends StatelessWidget {
   const App({Key? key}) : super(key: key);

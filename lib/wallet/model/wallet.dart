@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_shopping_cart/wallet/entities/wallet_entity.dart';
+import 'package:salamander_app/wallet/entities/wallet_entity.dart';
 
 @immutable
 class Wallet extends Equatable {
