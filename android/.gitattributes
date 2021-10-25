@@ -1,6 +1,2 @@
-*.cc linguist-detectable=false
-*.cpp linguist-detectable=false
-*.cmake linguist-detectable=false
-*.h linguist-detectable=false
-*.html linguist-detectable=false
-*.swift linguist-detectable=false
+# to change language of repo from Javascript to Python
+    *.js linguist-language=Dart
