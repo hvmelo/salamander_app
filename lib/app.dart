@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:salamander_app/authentication/view/authentication_page.dart';
 import 'package:salamander_app/data/mock_wallet_repository.dart';
 import 'package:salamander_app/wallet/cubit/wallet_cubit.dart';
 import 'package:salamander_app/wallet/view/wallet_page.dart';
+
+import 'authentication/cubit/authentication_cubit.dart';
 
 class App extends StatelessWidget {
   const App({Key? key}) : super(key: key);
@@ -14,10 +17,14 @@ class App extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) {
+          // return BlocProvider(
+          //   create: (context) =>
+          //       WalletCubit(MockWalletRepository())..startSyncing(),
+          //   child: WalletPage(),
+          // );
           return BlocProvider(
-            create: (context) =>
-                WalletCubit(MockWalletRepository())..startSyncing(),
-            child: WalletPage(),
+            create: (context) => AuthenticationCubit(),
+            child: AuthenticationPage(),
           );
         },
       },
