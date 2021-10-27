@@ -1,14 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:salamander_app/authentication/view/authentication_page.dart';
-import 'package:salamander_app/data/mock_wallet_repository.dart';
-import 'package:salamander_app/wallet/cubit/wallet_cubit.dart';
-import 'package:salamander_app/wallet/view/wallet_page.dart';
+import 'package:salamander_app/data/repositories/authentication/authentication_repository.dart';
+// import 'package:salamander_app/data/mock_wallet_repository.dart';
+// import 'package:salamander_app/wallet/cubit/wallet_cubit.dart';
+// import 'package:salamander_app/wallet/view/wallet_page.dart';
 
 import 'authentication/cubit/authentication_cubit.dart';
 
 class App extends StatelessWidget {
-  const App({Key? key}) : super(key: key);
+  const App({
+    Key? key,
+    required AuthenticationRepository authenticationRepository,
+  })  : _authenticationRepository = authenticationRepository,
+        super(key: key);
+
+  final AuthenticationRepository _authenticationRepository;
+
+  @override
+  Widget build(BuildContext context) {
+    return RepositoryProvider.value(
+      value: _authenticationRepository,
+      child: BlocProvider(
+        create: (context) => AuthenticationCubit(),
+        child: AuthenticationPage(),
+      ),
+    );
+  }
+}
+
+class AppView extends StatelessWidget {
+  const AppView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
