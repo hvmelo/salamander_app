@@ -1,16 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:salamander_app/data/data_providers/flutterfire.dart';
 
-class AuthenticationPage extends StatelessWidget {
-//   Authentication({Key? key}) : super(key: key);
+class LoginPage extends StatelessWidget {
+  const LoginPage({Key? key}) : super(key: key);
 
-//   @override
-//   _AuthenticationState createState() => _AuthenticationState();
-// }
-
-// class _AuthenticationState extends State<Authentication> {
-//   TextEditingController _emailField = TextEditingController();
-//   TextEditingController _passwordField = TextEditingController();
+  static Page page() => const MaterialPage<void>(child: LoginPage());
 
   @override
   Widget build(BuildContext context) {

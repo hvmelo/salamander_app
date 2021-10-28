@@ -5,6 +5,10 @@ import 'package:salamander_app/wallet/view/widgets/wallet_currency.dart';
 import 'package:salamander_app/wallet/view/widgets/wallet_refresh.dart';
 
 class WalletPage extends StatelessWidget {
+  const WalletPage({Key? key}) : super(key: key);
+
+  static Page page() => const MaterialPage<void>(child: WalletPage());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

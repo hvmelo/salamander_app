@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:salamander_app/data/wallet_repository.dart';
+import 'package:salamander_app/data/repositories/mock/wallet_repository.dart';
 
 part 'wallet_state.dart';
 
