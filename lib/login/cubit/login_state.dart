@@ -1,11 +1,11 @@
-part of 'authentication_cubit.dart';
+part of 'login_cubit.dart';
 
 enum WalletUnit { bitcoin, satoshi }
 enum WalletStatus { initial, synced, error }
 
 @immutable
-class AuthenticationState extends Equatable {
-  const AuthenticationState({
+class LoginState extends Equatable {
+  const LoginState({
     this.balance = 0,
     this.unit = WalletUnit.bitcoin,
     this.status = WalletStatus.initial,
@@ -15,12 +15,12 @@ class AuthenticationState extends Equatable {
   final WalletUnit unit;
   final WalletStatus status;
 
-  AuthenticationState copyWith({
+  LoginState copyWith({
     double? balance,
     WalletUnit? unit,
     WalletStatus? status,
   }) {
-    return AuthenticationState(
+    return LoginState(
       balance: balance ?? this.balance,
       unit: unit ?? this.unit,
       status: status ?? this.status,

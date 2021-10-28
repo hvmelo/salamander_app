@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:salamander_app/data/data_providers/flutterfire.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({Key? key}) : super(key: key);
