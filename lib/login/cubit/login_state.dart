@@ -1,50 +1,31 @@
 part of 'login_cubit.dart';
 
-enum WalletUnit { bitcoin, satoshi }
-enum WalletStatus { initial, synced, error }
-
 @immutable
 class LoginState extends Equatable {
-  const LoginState({
-    this.balance = 0,
-    this.unit = WalletUnit.bitcoin,
-    this.status = WalletStatus.initial,
-  });
+  const LoginState(
+      {this.email = const Email.pure(),
+      this.password = const Password.pure(),
+      this.status = FormzStatus.pure,
+      this.errorMessage});
 
-  final double balance;
-  final WalletUnit unit;
-  final WalletStatus status;
+  final Email email;
+  final Password password;
+  final FormzStatus status;
+  final String? errorMessage;
 
   LoginState copyWith({
-    double? balance,
-    WalletUnit? unit,
-    WalletStatus? status,
+    Email? email,
+    Password? password,
+    FormzStatus? status,
+    String? errorMessage,
   }) {
     return LoginState(
-      balance: balance ?? this.balance,
-      unit: unit ?? this.unit,
-      status: status ?? this.status,
-    );
-  }
-
-  String get balanceStr {
-    switch (unit) {
-      case WalletUnit.satoshi:
-        return balance.toStringAsFixed(0);
-      default:
-        return balance.toStringAsFixed(8);
-    }
-  }
-
-  String get getUnitStr {
-    switch (unit) {
-      case WalletUnit.satoshi:
-        return 'sats';
-      default:
-        return 'BTC';
-    }
+        email: email ?? this.email,
+        password: password ?? this.password,
+        status: status ?? this.status,
+        errorMessage: errorMessage ?? this.errorMessage);
   }
 
   @override
-  List<Object> get props => [balance, unit, status];
+  List<Object> get props => [email, password, status];
 }

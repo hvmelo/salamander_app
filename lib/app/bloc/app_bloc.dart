@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:salamander_app/data/repositories/authentication/authentication.dart';
+import 'package:salamander_app/data/repositories/authentication.dart';
 
 part 'app_event.dart';
 part 'app_state.dart';
