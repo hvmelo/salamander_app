@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:salamander_app/data/repositories/mock.dart';
-import 'package:salamander_app/wallet/wallet.dart';
+import 'package:salamander_app/data/repositories/authentication.dart';
+import 'package:salamander_app/sign_up/sign_up.dart';
 
-class WalletPage extends StatelessWidget {
-  const WalletPage({Key? key}) : super(key: key);
+class SignUpPage extends StatelessWidget {
+  const SignUpPage({Key? key}) : super(key: key);
 
-  static Page page() => const MaterialPage<void>(child: WalletPage());
+  static Route route() {
+    return MaterialPageRoute<void>(builder: (_) => const SignUpPage());
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,10 +24,10 @@ class WalletPage extends StatelessWidget {
               ],
             ),
           ),
-          child: BlocProvider<WalletCubit>(
+          child: BlocProvider<SignUpCubit>(
             create: (context) =>
-                WalletCubit(MockWalletRepository())..startSyncing(),
-            child: const WalletView(),
+                SignUpCubit(context.read<AuthenticationRepository>()),
+            child: const SignUpForm(),
           )),
     );
   }

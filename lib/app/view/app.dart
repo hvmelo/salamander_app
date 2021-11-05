@@ -4,9 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:salamander_app/app/app.dart';
 import 'package:salamander_app/data/repositories/authentication/authentication_repository.dart';
 import 'package:salamander_app/theme.dart';
-// import 'package:salamander_app/data/mock_wallet_repository.dart';
-// import 'package:salamander_app/wallet/cubit/wallet_cubit.dart';
-// import 'package:salamander_app/wallet/view/wallet_page.dart';
 
 class App extends StatelessWidget {
   const App({
