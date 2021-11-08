@@ -28,9 +28,9 @@ class LoginForm extends StatelessWidget {
           SizedBox(height: MediaQuery.of(context).size.height / 35),
           const PasswordInput(),
           SizedBox(height: MediaQuery.of(context).size.height / 35),
-          const SignUpButton(),
-          SizedBox(height: MediaQuery.of(context).size.height / 35),
           const LoginButton(),
+          SizedBox(height: MediaQuery.of(context).size.height / 35),
+          const SignUpButton(),
         ],
       ),
     );

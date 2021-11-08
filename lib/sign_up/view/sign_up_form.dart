@@ -30,6 +30,19 @@ class SignUpForm extends StatelessWidget {
           const ConfirmedPasswordInput(),
           SizedBox(height: MediaQuery.of(context).size.height / 35),
           const SignUpButton(),
+          SizedBox(height: MediaQuery.of(context).size.height / 35),
+          Container(
+            width: MediaQuery.of(context).size.width / 1.4,
+            height: 45,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15.0),
+              color: Colors.white,
+            ),
+            child: MaterialButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text('Back'),
+            ),
+          ),
         ],
       ),
     );
