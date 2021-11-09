@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'package:meta/meta.dart';
 import 'package:salamander_app/data/cache/cache.dart';
-import 'package:salamander_app/data/repositories/authentication/models/user.dart';
+import 'package:salamander_app/data/repositories/authentication_repository.dart';
 
 import 'exceptions/authentication_exception.dart';
 

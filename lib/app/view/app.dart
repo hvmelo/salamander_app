@@ -2,7 +2,7 @@ import 'package:flow_builder/flow_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:salamander_app/app/app.dart';
-import 'package:salamander_app/data/repositories/authentication/authentication_repository.dart';
+import 'package:salamander_app/data/repositories/authentication_repository.dart';
 import 'package:salamander_app/theme.dart';
 
 class App extends StatelessWidget {
