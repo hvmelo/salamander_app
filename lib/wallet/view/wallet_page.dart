@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:salamander_app/app/app.dart';
 import 'package:salamander_app/app/view/drawer.dart';
-import 'package:salamander_app/data/repositories/mock.dart';
+import 'package:salamander_app/data/repositories/mock_repository.dart';
 import 'package:salamander_app/wallet/wallet.dart';
 
 class WalletPage extends StatelessWidget {

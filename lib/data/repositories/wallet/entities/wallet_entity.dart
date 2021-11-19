@@ -21,7 +21,7 @@ class WalletEntity extends Equatable {
   @override
   List<Object?> get props => [ownerId, id, balance, lastUpdated];
 
-  static WalletEntity fromJson(Map<String, Object> json) {
+  static WalletEntity fromJson(Map<String, dynamic> json) {
     return WalletEntity(
       json['owner_id'] as String,
       json['balance'] as double,

@@ -1,37 +1,3 @@
-Skip to content
-Search or jump to…
-Pull requests
-Issues
-Marketplace
-Explore
- 
-@hvmelo 
-flutter
-/
-flutter
-Public
-3.6k
-132k19.2k
-Code
-Issues
-5k+
-Pull requests
-181
-Actions
-Projects
-163
-Wiki
-Security
-Insights
-flutter/.gitignore
-@blasten
-blasten Bump targetSdkVersion to 31 and organize static values (#91719)
-Latest commit d763127 10 days ago
- History
- 21 contributors
-@gspencergoog@jonahwilliams@xster@jmagman@christopherfujino@mravn-google@goderbauer@blasten@yjbanov@pq@mdebbar@MarcusTomlinson
-118 lines (107 sloc)  2.16 KB
-   
 # Miscellaneous
 *.class
 *.lock
