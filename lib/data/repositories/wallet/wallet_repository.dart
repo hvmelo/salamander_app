@@ -1,8 +1,10 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart' hide User;
 import 'package:salamander_app/data/repositories/authentication_repository.dart';
+import 'package:salamander_app/data/repositories/wallet/exceptions/wallet_repository_exception.dart';
 import 'package:salamander_app/data/repositories/wallet_repository.dart';
 
 class WalletRepository {
@@ -94,20 +96,20 @@ class WalletRepository {
   //   }
   // }
 
-  // Future<String> createWallet() async {
-  //   try {
-  //     var uid = FirebaseAuth.instance.currentUser?.uid;
-  //     if (uid == null) {
-  //       throw CreateWalletFailure();
-  //     }
-  //     var newWallet =
-  //         Wallet(ownerId: uid, balance: 0, lastUpdated: DateTime.now());
-  //     var ref = await _walletsCollection.add(newWallet.toEntity().toDocument());
-  //     return ref.id;
-  //   } catch (e) {
-  //     throw CreateWalletFailure();
-  //   }
-  // }
-}
+  Future<void> createWallet() async {
+    var createWalletCallable =
+        FirebaseFunctions.instanceFor(region: 'southamerica-east1')
+            .httpsCallable('createWallet');
 
-//class CreateWalletFailure implements Exception {}
+    try {
+      await createWalletCallable().then((value) {
+        var v = value;
+        print(v);
+      });
+    } on FirebaseFunctionsException catch (e) {
+      throw CreateWalletFailure.fromCode(e.code);
+    } catch (_) {
+      throw const CreateWalletFailure();
+    }
+  }
+}

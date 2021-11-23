@@ -2,14 +2,17 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 import 'package:salamander_app/data/repositories/authentication_repository.dart';
+import 'package:salamander_app/data/repositories/wallet/wallet_repository.dart';
 import 'package:salamander_app/util/form_inputs.dart';
 
 part 'sign_up_state.dart';
 
 class SignUpCubit extends Cubit<SignUpState> {
-  SignUpCubit(this._authenticationRepository) : super(const SignUpState());
+  SignUpCubit(this._authenticationRepository, this._walletRepository)
+      : super(const SignUpState());
 
   final AuthenticationRepository _authenticationRepository;
+  final WalletRepository _walletRepository;
 
   void emailChanged(String value) {
     final email = Email.dirty(value);
@@ -63,6 +66,8 @@ class SignUpCubit extends Cubit<SignUpState> {
         email: state.email.value,
         password: state.password.value,
       );
+      // Now should create the wallet
+      await _walletRepository.createWallet();
       emit(state.copyWith(status: FormzStatus.submissionSuccess));
     } on SignUpWithEmailAndPasswordFailure catch (e) {
       emit(state.copyWith(
