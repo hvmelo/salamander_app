@@ -1,6 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
-import 'package:salamander_app/data/repositories/authentication_repository.dart';
 import 'package:salamander_app/data/repositories/wallet/entities/wallet_entity.dart';
 
 @immutable
@@ -14,10 +14,10 @@ class Wallet extends Equatable {
   final String ownerId;
   final String? id;
   final double balance;
-  final DateTime lastUpdated;
+  final Timestamp lastUpdated;
 
   Wallet copyWith(
-      {String? ownerId, double? balance, DateTime? lastUpdated, String? id}) {
+      {String? ownerId, double? balance, Timestamp? lastUpdated, String? id}) {
     return Wallet(
       ownerId: ownerId ?? this.ownerId,
       balance: balance ?? this.balance,

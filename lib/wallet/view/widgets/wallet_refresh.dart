@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:salamander_app/wallet/cubit/wallet_cubit.dart';
+import 'package:salamander_app/wallet/wallet.dart';
 
 class WalletRefresh extends StatelessWidget {
   const WalletRefresh({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<WalletCubit, WalletState>(
+    return BlocBuilder<WalletBloc, WalletState>(
       builder: (context, state) {
         if (state.status != WalletStatus.error) {
           return const Center(
@@ -33,7 +33,7 @@ class WalletRefresh extends StatelessWidget {
                   padding: const EdgeInsets.all(5),
                   iconSize: 25,
                   color: Colors.blue.shade300,
-                  onPressed: () => context.read<WalletCubit>().startSyncing()),
+                  onPressed: () {}),
             ),
           );
         }

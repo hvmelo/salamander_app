@@ -13,33 +13,63 @@ class WalletRepository {
 
   final AuthenticationRepository _authenticationRepository;
   late final StreamSubscription<User> _userSubscription;
+  final CollectionReference _usersCollectionRef =
+      FirebaseFirestore.instance.collection('users');
   final CollectionReference _walletsCollectionRef = FirebaseFirestore.instance
       .collection('wallets')
       .withConverter<WalletEntity>(
-        fromFirestore: (snapshot, _) => WalletEntity.fromJson(snapshot.data()!),
-        toFirestore: (wallet, _) => wallet.toJson(),
+        fromFirestore: (snapshot, _) => WalletEntity.fromSnapshot(snapshot),
+        toFirestore: (wallet, _) => wallet.toDocument(),
       );
 
   String? _currentWalletId;
 
   Future<void> _userChanged(User user) async {
-    List<QueryDocumentSnapshot<WalletEntity>> walletEntities = await _walletsCollectionRef
-        .where('owner.uid', isEqualTo: user.id)
-        .get()
-        .then((snapshot) => snapshot.docs);
-    if (snapshot.docs.isEmpty) {
+    // var entities = await _walletsCollectionRef
+    //     .where('owner.uid', isEqualTo: user.id)
+    //     .get()
+    //     .then((snapshot) => snapshot.docs);
+
+    if (user.isEmpty) {
+      _currentWalletId = null;
+      return;
+    }
+
+    var userRef = await _usersCollectionRef.doc(user.id).get();
+    if (!userRef.exists) {
       // No wallet was created for this user
       return;
     }
 
-    var walletEntity = snapshot.docs.first.data();
-      _currentWalletId = walletEntity.id;
-    }
+    _currentWalletId = userRef.get('current_wallet_id') as String;
+    print(_currentWalletId);
   }
 
-  @override
-  Stream<Wallet> wallet() {
-    throw UnimplementedError();
+  Stream<Wallet> wallet() async* {
+    var user = _authenticationRepository.currentUser;
+    var userRef = await _usersCollectionRef.doc(user.id).get();
+    if (!userRef.exists) {
+      //Try again because Firebase needs some time before user creation
+      await Future<void>.delayed(const Duration(seconds: 20));
+      userRef = await _usersCollectionRef.doc(user.id).get();
+      if (!userRef.exists) {
+        // Here should throw exception
+        return;
+      }
+    }
+    var currentWalletId = userRef.get('current_wallet_id') as String;
+
+    if (_currentWalletId == null) {}
+    yield* _walletsCollectionRef
+        .doc(currentWalletId)
+        .snapshots()
+        .map((snapshot) {
+      return Wallet.fromEntity(WalletEntity.fromSnapshot(snapshot));
+    });
+  }
+
+  void close() {
+    _userSubscription.cancel();
   }
 
   //     try {

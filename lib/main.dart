@@ -6,9 +6,11 @@ import 'package:salamander_app/data/repositories/authentication_repository.dart'
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  Bloc.observer = AppBlocObserver();
   await Firebase.initializeApp();
   final authenticationRepository = AuthenticationRepository();
   await authenticationRepository.user.first;
-  runApp(App(authenticationRepository: authenticationRepository));
+  BlocOverrides.runZoned(
+    () => runApp(App(authenticationRepository: authenticationRepository)),
+    blocObserver: AppBlocObserver(),
+  );
 }

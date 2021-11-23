@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:salamander_app/app/app.dart';
 import 'package:salamander_app/app/view/drawer.dart';
-import 'package:salamander_app/data/repositories/mock_repository.dart';
+import 'package:salamander_app/data/repositories/authentication_repository.dart';
+import 'package:salamander_app/data/repositories/wallet_repository.dart';
 import 'package:salamander_app/wallet/wallet.dart';
 
 class WalletPage extends StatelessWidget {
@@ -21,21 +21,28 @@ class WalletPage extends StatelessWidget {
         elevation: 0.0,
       ),
       body: Container(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
-          decoration: const BoxDecoration(
-            gradient: RadialGradient(
-              colors: [
-                Colors.blue,
-                Colors.black,
-              ],
-            ),
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
+        decoration: const BoxDecoration(
+          gradient: RadialGradient(
+            colors: [
+              Colors.blue,
+              Colors.black,
+            ],
           ),
-          child: BlocProvider<WalletCubit>(
+        ),
+        child: RepositoryProvider(
+          create: (context) => WalletRepository(
+            authenticationRepository: context.read<AuthenticationRepository>(),
+          ),
+          child: BlocProvider<WalletBloc>(
             create: (context) =>
-                WalletCubit(MockWalletRepository())..startSyncing(),
+                WalletBloc(walletRepository: context.read<WalletRepository>())
+                  ..add(WalletInit()),
             child: const WalletView(),
-          )),
+          ),
+        ),
+      ),
     );
   }
 }

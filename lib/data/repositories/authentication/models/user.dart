@@ -1,11 +1,9 @@
 import 'package:equatable/equatable.dart';
-import 'package:salamander_app/wallet/model/wallet.dart';
 
 class User extends Equatable {
   const User({
     required this.id,
     required this.email,
-    this.wallet,
     this.name,
   });
 
@@ -14,8 +12,6 @@ class User extends Equatable {
   final String id;
 
   final String? name;
-
-  final Wallet? wallet;
 
   /// Empty user which represents an unauthenticated user.
   static const empty = User(id: '', email: '');
@@ -27,5 +23,5 @@ class User extends Equatable {
   bool get isNotEmpty => this != User.empty;
 
   @override
-  List<Object?> get props => [email, id, wallet, name];
+  List<Object?> get props => [email, id, name];
 }
