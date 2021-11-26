@@ -20,16 +20,29 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
   final WalletRepository _walletRepository;
   StreamSubscription? _walletSubscription;
 
-  void _onWalletInit(WalletInit event, Emitter<WalletState> emit) {
-    _walletSubscription?.cancel();
-    _walletSubscription = _walletRepository.wallet().listen((wallet) {
+  void _onWalletInit(WalletInit event, Emitter<WalletState> emit) async {
+    emit(state.copyWith(status: WalletStatus.loading));
+    await _walletRepository.setupWallet();
+
+    var currentWallet = _walletRepository.currentWallet;
+    if (currentWallet == null) {
+      emit(state.copyWith(
+          status: WalletStatus.error,
+          errorMessage: 'Error setting up the wallet'));
+      return;
+    }
+
+    emit(state.copyWith(
+        balance: currentWallet.balance, status: WalletStatus.synced));
+    await _walletSubscription?.cancel();
+    _walletSubscription = _walletRepository.wallet?.listen((wallet) {
       add(WalletUpdated(wallet));
     });
   }
 
   void _onWalletUpdated(WalletUpdated event, Emitter<WalletState> emit) {
     var wallet = event.wallet;
-    emit(state.copyWith(balance: wallet.balance));
+    emit(state.copyWith(balance: wallet.balance, status: WalletStatus.synced));
   }
 
   void _onWalletUnitChanged(

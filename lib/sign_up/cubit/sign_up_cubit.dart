@@ -66,8 +66,6 @@ class SignUpCubit extends Cubit<SignUpState> {
         email: state.email.value,
         password: state.password.value,
       );
-      // Now should create the wallet
-      await _walletRepository.createWallet();
       emit(state.copyWith(status: FormzStatus.submissionSuccess));
     } on SignUpWithEmailAndPasswordFailure catch (e) {
       emit(state.copyWith(

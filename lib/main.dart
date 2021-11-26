@@ -9,10 +9,9 @@ import 'package:salamander_app/data/repositories/wallet/wallet_repository.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  FirebaseFunctions.instance.useFunctionsEmulator('localhost', 5001);
-
   final authenticationRepository = AuthenticationRepository();
   await authenticationRepository.user.first;
+  await authenticationRepository.logOut();
   final walletRepository =
       WalletRepository(authenticationRepository: authenticationRepository);
   BlocOverrides.runZoned(

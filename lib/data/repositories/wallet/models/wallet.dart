@@ -5,16 +5,19 @@ import 'package:salamander_app/data/repositories/wallet/entities/wallet_entity.d
 
 @immutable
 class Wallet extends Equatable {
-  Wallet(
+  const Wallet(
       {required this.ownerId,
       required this.balance,
-      required this.lastUpdated,
+      this.lastUpdated,
       this.id});
 
   final String ownerId;
   final String? id;
   final double balance;
-  final Timestamp lastUpdated;
+  final Timestamp? lastUpdated;
+
+  /// Empty user which represents an unauthenticated user.
+  static const empty = Wallet(ownerId: '', balance: 0);
 
   Wallet copyWith(
       {String? ownerId, double? balance, Timestamp? lastUpdated, String? id}) {
@@ -35,7 +38,8 @@ class Wallet extends Equatable {
   }
 
   WalletEntity toEntity() {
-    return WalletEntity(ownerId, balance, lastUpdated, id ?? '');
+    return WalletEntity(
+        ownerId, balance, lastUpdated ?? Timestamp.now(), id ?? '');
   }
 
   static Wallet fromEntity(WalletEntity entity) {

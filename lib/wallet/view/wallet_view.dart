@@ -7,44 +7,80 @@ class WalletView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SizedBox.expand(
-        child: Container(
-          decoration: const BoxDecoration(
-            // image: DecorationImage(
-            //   image: AssetImage('assets/images/bg1.jpg'),
-            //   fit: BoxFit.cover,
-            // ),
-            gradient: RadialGradient(
-              colors: [
-                Colors.blue,
-                Colors.black,
+      body: Stack(
+        fit: StackFit.expand,
+        children: [
+          Container(
+            decoration: const BoxDecoration(
+              gradient: RadialGradient(
+                colors: [
+                  Colors.red,
+                  Colors.black,
+                ],
+              ),
+            ),
+            child: Column(
+              children: [
+                Expanded(
+                  child: Container(),
+                ),
+                const WalletBalance(),
+                Expanded(
+                  child: Container(
+                    child: Column(
+                      children: [
+                        const WalletCurrency(),
+                        const SizedBox(height: 15),
+                        const WalletRefresh(),
+                        Expanded(
+                          child: Container(),
+                        ),
+                        const WalletActions(),
+                      ],
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
-          child: Column(
-            children: [
-              Expanded(
-                child: Container(),
+          Container(
+            decoration: const BoxDecoration(
+              // image: DecorationImage(
+              //   image: AssetImage('assets/images/bg1.jpg'),
+              //   fit: BoxFit.cover,
+              // ),
+              gradient: RadialGradient(
+                colors: [
+                  Colors.blue,
+                  Colors.black,
+                ],
               ),
-              const WalletBalance(),
-              Expanded(
-                child: Container(
-                  child: Column(
-                    children: [
-                      const WalletCurrency(),
-                      const SizedBox(height: 15),
-                      const WalletRefresh(),
-                      Expanded(
-                        child: Container(),
-                      ),
-                      const WalletActions(),
-                    ],
+            ),
+            child: Column(
+              children: [
+                Expanded(
+                  child: Container(),
+                ),
+                const WalletBalance(),
+                Expanded(
+                  child: Container(
+                    child: Column(
+                      children: [
+                        const WalletCurrency(),
+                        const SizedBox(height: 15),
+                        const WalletRefresh(),
+                        Expanded(
+                          child: Container(),
+                        ),
+                        const WalletActions(),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
+        ],
       ),
     );
   }

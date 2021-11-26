@@ -23,14 +23,14 @@ class WalletPage extends StatelessWidget {
       body: Container(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
-        decoration: const BoxDecoration(
-          gradient: RadialGradient(
-            colors: [
-              Colors.blue,
-              Colors.black,
-            ],
-          ),
-        ),
+        // decoration: const BoxDecoration(
+        //   gradient: RadialGradient(
+        //     colors: [
+        //       Colors.blue,
+        //       Colors.black,
+        //     ],
+        //   ),
+        // ),
         child: RepositoryProvider(
           create: (context) => WalletRepository(
             authenticationRepository: context.read<AuthenticationRepository>(),
