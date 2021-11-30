@@ -20,47 +20,51 @@ class WalletRepository {
         toFirestore: (wallet, _) => wallet.toDocument(),
       );
 
-  Wallet? currentWallet;
+  Wallet? _currentWallet;
 
   Stream<Wallet>? get wallet {
-    if (currentWallet == null) {
+    if (_currentWallet == null) {
       return null;
     }
     return _walletsCollectionRef
-        .doc(currentWallet!.id)
+        .doc(_currentWallet!.id)
         .snapshots()
         .map((snapshot) {
       return Wallet.fromEntity(WalletEntity.fromSnapshot(snapshot));
     });
   }
 
-  Future<void> setupWallet() async {
-    var user = _authenticationRepository.currentUser;
-    var userRef = await _usersCollectionRef.doc(user.id).get();
-    if (!userRef.exists) {
-      await _createWallet();
-      userRef = await _usersCollectionRef.doc(user.id).get();
+  Future<Wallet?> get currentWallet async {
+    if (_currentWallet == null) {
+      var user = _authenticationRepository.currentUser;
+      var userRef = await _usersCollectionRef.doc(user.id).get();
+      if (userRef.exists) {
+        var walletId = await userRef.get('current_wallet_id') as String;
+
+        var snap = await _walletsCollectionRef.doc(walletId).get();
+        _currentWallet = Wallet.fromEntity(WalletEntity.fromSnapshot(snap));
+        return _currentWallet;
+      }
+    } else {
+      return _currentWallet;
     }
-
-    var walletId = await userRef.get('current_wallet_id') as String;
-
-    var snap = await _walletsCollectionRef.doc(walletId).get();
-    currentWallet = Wallet.fromEntity(WalletEntity.fromSnapshot(snap));
   }
 
-  Future<void> _createWallet() async {
+  Future<Wallet?> createWallet() async {
     var createWalletCallable =
         FirebaseFunctions.instanceFor(region: 'southamerica-east1')
             .httpsCallable('createWallet');
 
     try {
-      await createWalletCallable().then((value) {
-        var v = value;
-        print(v);
-      });
+      var result = await createWalletCallable();
+      var resMap = result.data as Map<String, dynamic>;
+      var walletId = resMap['wallet_id'] as String;
+      var snap = await _walletsCollectionRef.doc(walletId).get();
+      _currentWallet = Wallet.fromEntity(WalletEntity.fromSnapshot(snap));
+      return _currentWallet;
     } on FirebaseFunctionsException catch (e) {
       throw CreateWalletFailure.fromCode(e.code);
-    } catch (_) {
+    } catch (e) {
       throw const CreateWalletFailure();
     }
   }

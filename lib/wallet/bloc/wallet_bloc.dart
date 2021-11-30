@@ -15,20 +15,49 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
     on<WalletUnitChanged>(_onWalletUnitChanged);
     on<WalletUpdated>(_onWalletUpdated);
     on<WalletInit>(_onWalletInit);
+    on<WalletCreate>(_onWalletCreate);
   }
 
   final WalletRepository _walletRepository;
   StreamSubscription? _walletSubscription;
 
-  void _onWalletInit(WalletInit event, Emitter<WalletState> emit) async {
-    emit(state.copyWith(status: WalletStatus.loading));
-    await _walletRepository.setupWallet();
+  Future<void> _onWalletInit(
+      WalletInit event, Emitter<WalletState> emit) async {
+    var currentWallet = await _walletRepository.currentWallet;
 
-    var currentWallet = _walletRepository.currentWallet;
+    await Future<void>.delayed(const Duration(seconds: 1));
+
+    if (currentWallet != null) {
+      emit(state.copyWith(
+          balance: currentWallet.balance, status: WalletStatus.synced));
+      await _walletSubscription?.cancel();
+      _walletSubscription = _walletRepository.wallet?.listen((wallet) {
+        add(WalletUpdated(wallet));
+      });
+
+      if (_walletSubscription == null) {
+        emit(state.copyWith(
+            status: WalletStatus.error,
+            errorMessage: 'Error subscribing to wallet'));
+        return;
+      }
+    } else {
+      add(WalletCreate());
+    }
+  }
+
+  Future<void> _onWalletCreate(
+      WalletCreate event, Emitter<WalletState> emit) async {
+    emit(state.copyWith(status: WalletStatus.creating));
+
+    var currentWallet = await _walletRepository.createWallet();
+
+    await Future<void>.delayed(const Duration(seconds: 1));
+
     if (currentWallet == null) {
       emit(state.copyWith(
           status: WalletStatus.error,
-          errorMessage: 'Error setting up the wallet'));
+          errorMessage: 'An error occurred while creating the wallet'));
       return;
     }
 
@@ -38,6 +67,12 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
     _walletSubscription = _walletRepository.wallet?.listen((wallet) {
       add(WalletUpdated(wallet));
     });
+    if (_walletSubscription == null) {
+      emit(state.copyWith(
+          status: WalletStatus.error,
+          errorMessage: 'An error occurred while subscribing to wallet'));
+      return;
+    }
   }
 
   void _onWalletUpdated(WalletUpdated event, Emitter<WalletState> emit) {

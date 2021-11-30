@@ -9,6 +9,8 @@ abstract class WalletEvent extends Equatable {
 
 class WalletInit extends WalletEvent {}
 
+class WalletCreate extends WalletEvent {}
+
 class WalletUpdated extends WalletEvent {
   const WalletUpdated(this.wallet);
   final Wallet wallet;

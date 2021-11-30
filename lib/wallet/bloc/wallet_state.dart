@@ -1,7 +1,7 @@
 part of 'wallet_bloc.dart';
 
 enum WalletUnit { bitcoin, satoshi }
-enum WalletStatus { initial, loading, synced, error }
+enum WalletStatus { initial, creating, synced, error }
 
 class WalletState extends Equatable {
   const WalletState(
