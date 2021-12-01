@@ -72,8 +72,6 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
 
     await Future<void>.delayed(const Duration(seconds: 1));
 
-    currentWallet = null;
-
     if (currentWallet == null) {
       emit(state.copyWith(
           status: WalletStatus.error,
