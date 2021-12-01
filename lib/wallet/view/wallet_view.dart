@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:salamander_app/app/view/drawer.dart';
 import 'package:salamander_app/wallet/view/widgets.dart';
+import 'package:salamander_app/wallet/view/widgets/wallet_setup.dart';
 import 'package:salamander_app/wallet/wallet.dart';
 
 class WalletView extends StatelessWidget {
@@ -46,7 +47,7 @@ class WalletView extends StatelessWidget {
                           children: [
                             const WalletCurrency(),
                             const SizedBox(height: 15),
-                            const WalletRefresh(),
+                            //const WalletRefresh(),
                             Expanded(
                               child: Container(),
                             ),
@@ -59,48 +60,8 @@ class WalletView extends StatelessWidget {
                 ),
               ),
               Visibility(
-                visible: (state.status == WalletStatus.initial ||
-                    state.status == WalletStatus.creating),
-                child: Container(
-                  decoration: const BoxDecoration(
-                    color: Colors.black,
-                  ),
-                  child: Column(
-                    children: [
-                      Expanded(
-                        child: Container(),
-                      ),
-                      const CircularProgressIndicator(),
-                      Expanded(
-                        child: Container(
-                          child: Column(
-                            children: [
-                              Visibility(
-                                visible: state.status == WalletStatus.creating,
-                                child: const SizedBox(height: 15),
-                              ),
-                              Visibility(
-                                visible: state.status == WalletStatus.creating,
-                                child: const Text(
-                                  'Creating your wallet...',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 16.0,
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ),
-                              Expanded(
-                                child: Container(),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                visible: (state.status != WalletStatus.synced),
+                child: const WalletSetup(),
               ),
             ],
           ),

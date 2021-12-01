@@ -23,7 +23,16 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
 
   Future<void> _onWalletInit(
       WalletInit event, Emitter<WalletState> emit) async {
-    var currentWallet = await _walletRepository.currentWallet;
+    Wallet? currentWallet;
+    emit(state.copyWith(status: WalletStatus.initial));
+    try {
+      currentWallet = await _walletRepository.currentWallet;
+    } catch (e) {
+      emit(state.copyWith(
+          status: WalletStatus.error,
+          errorMessage: "Can't retrieve wallet data"));
+      return;
+    }
 
     await Future<void>.delayed(const Duration(seconds: 1));
 
@@ -38,7 +47,7 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
       if (_walletSubscription == null) {
         emit(state.copyWith(
             status: WalletStatus.error,
-            errorMessage: 'Error subscribing to wallet'));
+            errorMessage: 'An error occurred on wallet subscription'));
         return;
       }
     } else {
@@ -50,14 +59,25 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
       WalletCreate event, Emitter<WalletState> emit) async {
     emit(state.copyWith(status: WalletStatus.creating));
 
-    var currentWallet = await _walletRepository.createWallet();
+    Wallet? currentWallet;
+
+    try {
+      currentWallet = await _walletRepository.createWallet();
+    } catch (e) {
+      emit(state.copyWith(
+          status: WalletStatus.error,
+          errorMessage: 'An error occurred during wallet creation'));
+      return;
+    }
 
     await Future<void>.delayed(const Duration(seconds: 1));
+
+    currentWallet = null;
 
     if (currentWallet == null) {
       emit(state.copyWith(
           status: WalletStatus.error,
-          errorMessage: 'An error occurred while creating the wallet'));
+          errorMessage: 'An error occurred during wallet creation'));
       return;
     }
 
@@ -70,7 +90,7 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
     if (_walletSubscription == null) {
       emit(state.copyWith(
           status: WalletStatus.error,
-          errorMessage: 'An error occurred while subscribing to wallet'));
+          errorMessage: 'An error occurred on wallet subscription'));
       return;
     }
   }
@@ -89,6 +109,12 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
       emit(state.copyWith(
           balance: state.balance.toSatoshi(), unit: WalletUnit.satoshi));
     }
+  }
+
+  @override
+  Future<void> close() {
+    _walletSubscription?.cancel();
+    return super.close();
   }
 }
 

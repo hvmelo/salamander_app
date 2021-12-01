@@ -2,15 +2,13 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_functions/cloud_functions.dart';
-import 'package:salamander_app/data/repositories/authentication_repository.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:salamander_app/data/repositories/wallet/exceptions/wallet_repository_exception.dart';
 import 'package:salamander_app/data/repositories/wallet_repository.dart';
 
 class WalletRepository {
-  WalletRepository({required AuthenticationRepository authenticationRepository})
-      : _authenticationRepository = authenticationRepository;
+  WalletRepository();
 
-  final AuthenticationRepository _authenticationRepository;
   final CollectionReference _usersCollectionRef =
       FirebaseFirestore.instance.collection('users');
   final CollectionReference _walletsCollectionRef = FirebaseFirestore.instance
@@ -36,8 +34,12 @@ class WalletRepository {
 
   Future<Wallet?> get currentWallet async {
     if (_currentWallet == null) {
-      var user = _authenticationRepository.currentUser;
-      var userRef = await _usersCollectionRef.doc(user.id).get();
+      var user = FirebaseAuth.instance.currentUser;
+      if (user == null) {
+        return null;
+      }
+
+      var userRef = await _usersCollectionRef.doc(user.uid).get();
       if (userRef.exists) {
         var walletId = await userRef.get('current_wallet_id') as String;
 

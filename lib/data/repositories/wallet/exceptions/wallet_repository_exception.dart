@@ -1,7 +1,14 @@
-class CreateWalletFailure implements Exception {
-  const CreateWalletFailure([
-    this.message = 'An unknown exception occurred.',
-  ]);
+class WalletRepositoryException implements Exception {
+  const WalletRepositoryException(
+      [this.message = 'An unknown error has ocurred']);
+
+  /// The associated error message.
+  final String message;
+}
+
+class CreateWalletFailure extends WalletRepositoryException {
+  const CreateWalletFailure([String message = 'An unknown error has ocurred'])
+      : super(message);
 
   factory CreateWalletFailure.fromCode(String code) {
     switch (code) {
@@ -13,7 +20,4 @@ class CreateWalletFailure implements Exception {
         return const CreateWalletFailure();
     }
   }
-
-  /// The associated error message.
-  final String message;
 }

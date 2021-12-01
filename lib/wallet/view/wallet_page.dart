@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:salamander_app/data/repositories/authentication_repository.dart';
 import 'package:salamander_app/data/repositories/wallet_repository.dart';
 import 'package:salamander_app/wallet/wallet.dart';
 
@@ -16,9 +15,7 @@ class WalletPage extends StatelessWidget {
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
         child: RepositoryProvider(
-          create: (context) => WalletRepository(
-            authenticationRepository: context.read<AuthenticationRepository>(),
-          ),
+          create: (context) => WalletRepository(),
           child: BlocProvider<WalletBloc>(
             create: (context) =>
                 WalletBloc(walletRepository: context.read<WalletRepository>())
