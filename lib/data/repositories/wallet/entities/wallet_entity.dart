@@ -2,19 +2,22 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 
 class WalletEntity extends Equatable {
-  const WalletEntity(this.ownerId, this.balance, this.lastUpdated, this.id);
+  const WalletEntity(
+      this.id, this.ownerId, this.balance, this.lastUpdated, this.created);
 
+  final String id;
   final String ownerId;
   final double balance;
-  final String id;
   final Timestamp lastUpdated;
+  final Timestamp created;
 
   Map<String, Object> toJson() {
     return {
+      'id': id,
       'owner_id': ownerId,
       'balance': balance,
+      'created': created,
       'lastUpdated': lastUpdated,
-      'id': id,
     };
   }
 
@@ -23,27 +26,21 @@ class WalletEntity extends Equatable {
 
   static WalletEntity fromJson(Map<String, dynamic> json) {
     return WalletEntity(
-      json['owner']['uid'] as String,
-      json['current_balance'].toDouble() as double,
-      json['last_updated'] as Timestamp,
       json['id'] as String,
+      json['owner_id'] as String,
+      json['balance']['total_settled'].toDouble() as double,
+      json['last_updated'] as Timestamp,
+      json['created'] as Timestamp,
     );
   }
 
   static WalletEntity fromSnapshot(DocumentSnapshot snap) {
     return WalletEntity(
-      snap.get('owner_id') as String,
-      snap.get('current_balance').toDouble() as double,
-      snap.get('last_updated') as Timestamp,
       snap.id,
+      snap.get('owner_id') as String,
+      snap.get('balance.total_settled').toDouble() as double,
+      snap.get('created') as Timestamp,
+      snap.get('last_updated') as Timestamp,
     );
-  }
-
-  Map<String, Object> toDocument() {
-    return {
-      'owner.id': ownerId,
-      'current_balance': balance,
-      'last_updated': lastUpdated,
-    };
   }
 }

@@ -38,7 +38,8 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
 
     if (currentWallet != null) {
       emit(state.copyWith(
-          balance: currentWallet.balance, status: WalletStatus.synced));
+          balance: unitCorrectedBalance(currentWallet),
+          status: WalletStatus.synced));
       await _walletSubscription?.cancel();
       _walletSubscription = _walletRepository.wallet?.listen((wallet) {
         add(WalletUpdated(wallet));
@@ -80,7 +81,8 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
     }
 
     emit(state.copyWith(
-        balance: currentWallet.balance, status: WalletStatus.synced));
+        balance: unitCorrectedBalance(currentWallet),
+        status: WalletStatus.synced));
     await _walletSubscription?.cancel();
     _walletSubscription = _walletRepository.wallet?.listen((wallet) {
       add(WalletUpdated(wallet));
@@ -95,7 +97,7 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
 
   void _onWalletUpdated(WalletUpdated event, Emitter<WalletState> emit) {
     var wallet = event.wallet;
-    emit(state.copyWith(balance: wallet.balance, status: WalletStatus.synced));
+    emit(state.copyWith(balance: unitCorrectedBalance(wallet)));
   }
 
   void _onWalletUnitChanged(
@@ -107,6 +109,12 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
       emit(state.copyWith(
           balance: state.balance.toSatoshi(), unit: WalletUnit.satoshi));
     }
+  }
+
+  double unitCorrectedBalance(Wallet wallet) {
+    return state.unit == WalletUnit.bitcoin
+        ? wallet.balance.toBTC()
+        : wallet.balance;
   }
 
   @override

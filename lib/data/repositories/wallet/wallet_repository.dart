@@ -15,7 +15,7 @@ class WalletRepository {
       .collection('wallets')
       .withConverter<WalletEntity>(
         fromFirestore: (snapshot, _) => WalletEntity.fromSnapshot(snapshot),
-        toFirestore: (wallet, _) => wallet.toDocument(),
+        toFirestore: (wallet, _) => wallet.toJson(),
       );
 
   Wallet? _currentWallet;
@@ -41,7 +41,7 @@ class WalletRepository {
 
       var userRef = await _usersCollectionRef.doc(user.uid).get();
       if (userRef.exists) {
-        var walletId = await userRef.get('current_wallet_id') as String;
+        var walletId = await userRef.get('active_wallet_id') as String;
 
         var snap = await _walletsCollectionRef.doc(walletId).get();
         _currentWallet = Wallet.fromEntity(WalletEntity.fromSnapshot(snap));
