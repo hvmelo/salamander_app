@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:salamander_app/receive/view/receive_coins_page.dart';
 
 class WalletActions extends StatelessWidget {
   const WalletActions({Key? key}) : super(key: key);
@@ -15,6 +16,7 @@ class WalletActions extends StatelessWidget {
               label: const Text('RECEIVE'),
               icon: const Icon(Icons.download),
               onPressed: () {
+                Navigator.of(context).push<void>(ReceiveCoinsPage.route());
                 print('Receive Pressed');
               },
             ),
