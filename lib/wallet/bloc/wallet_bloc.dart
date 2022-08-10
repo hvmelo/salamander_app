@@ -104,17 +104,30 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
       WalletUnitChanged event, Emitter<WalletState> emit) {
     if (state.unit == WalletUnit.satoshi) {
       emit(state.copyWith(
-          balance: state.balance.toBTC(), unit: WalletUnit.bitcoin));
+          balance: toBTC(state.balance), unit: WalletUnit.bitcoin));
     } else {
       emit(state.copyWith(
-          balance: state.balance.toSatoshi(), unit: WalletUnit.satoshi));
+          balance: toSatoshi(state.balance), unit: WalletUnit.satoshi));
     }
   }
 
-  double unitCorrectedBalance(Wallet wallet) {
-    return state.unit == WalletUnit.bitcoin
-        ? wallet.balance.toBTC()
-        : wallet.balance;
+  num unitCorrectedBalance(Wallet wallet) {
+    var balanceInSats = wallet.balance != null
+        ? wallet.balance!['total_settled'] as num
+        : 0 as num;
+
+    var correctedBalance =
+        state.unit == WalletUnit.bitcoin ? toBTC(balanceInSats) : balanceInSats;
+
+    return correctedBalance;
+  }
+
+  double toBTC(double balanceInSats) {
+    return balanceInSats / 100000000;
+  }
+
+  double toSatoshi(double balanceInBTC) {
+    return balanceInBTC * 100000000;
   }
 
   @override
@@ -122,9 +135,4 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
     _walletSubscription?.cancel();
     return super.close();
   }
-}
-
-extension on double {
-  double toSatoshi() => this * 100000000;
-  double toBTC() => this / 100000000;
 }

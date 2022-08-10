@@ -7,7 +7,7 @@ class WalletEntity extends Equatable {
 
   final String id;
   final String ownerId;
-  final double balance;
+  final Map balance;
   final Timestamp lastUpdated;
   final Timestamp created;
 
@@ -28,7 +28,7 @@ class WalletEntity extends Equatable {
     return WalletEntity(
       json['id'] as String,
       json['owner_id'] as String,
-      json['balance']['total_settled'].toDouble() as double,
+      json['balance'] as Map,
       json['last_updated'] as Timestamp,
       json['created'] as Timestamp,
     );
@@ -38,7 +38,7 @@ class WalletEntity extends Equatable {
     return WalletEntity(
       snap.id,
       snap.get('owner_id') as String,
-      snap.get('balance.total_settled').toDouble() as double,
+      snap.get('balance') as Map,
       snap.get('created') as Timestamp,
       snap.get('last_updated') as Timestamp,
     );

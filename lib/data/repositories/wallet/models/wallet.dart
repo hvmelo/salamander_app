@@ -7,23 +7,23 @@ import 'package:salamander_app/data/repositories/wallet/entities/wallet_entity.d
 class Wallet extends Equatable {
   const Wallet(
       {required this.ownerId,
-      required this.balance,
+      this.balance,
       this.lastUpdated,
       this.created,
       this.id});
 
   final String ownerId;
   final String? id;
-  final double balance;
+  final Map? balance;
   final Timestamp? lastUpdated;
   final Timestamp? created;
 
   /// Empty user which represents an unauthenticated user.
-  static const empty = Wallet(ownerId: '', balance: 0);
+  static const empty = Wallet(ownerId: '');
 
   Wallet copyWith(
       {String? ownerId,
-      double? balance,
+      Map? balance,
       Timestamp? lastUpdated,
       Timestamp? created,
       String? id}) {
@@ -42,15 +42,31 @@ class Wallet extends Equatable {
   @override
   String toString() {
     return '''
-        Wallet {owner id: $ownerId, balance: $balance, id: $id, 
+        Wallet {owner id: $ownerId, 
+        settled balance: ${balance != null ? balance!['total_settled'] : 0}, 
+        id: $id, 
         created: $created}, 
         last updated: $lastUpdated}
     ''';
   }
 
   WalletEntity toEntity() {
-    return WalletEntity(id ?? '', ownerId, balance, created ?? Timestamp.now(),
-        lastUpdated ?? Timestamp.now());
+    return WalletEntity(id ?? '', ownerId, balance ?? createNewBalance(),
+        created ?? Timestamp.now(), lastUpdated ?? Timestamp.now());
+  }
+
+  Map<String, Object> createNewBalance() {
+    return {
+      'total_settled': 0,
+      'incoming': {
+        'confirmed': 0,
+        'unconfirmed': 0,
+      },
+      'outgoing': {
+        'confirmed': 0,
+        'unconfirmed': 0,
+      }
+    };
   }
 
   static Wallet fromEntity(WalletEntity entity) {

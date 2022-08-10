@@ -10,13 +10,13 @@ class WalletState extends Equatable {
       this.status = WalletStatus.initial,
       this.errorMessage = ''});
 
-  final double balance;
+  final num balance;
   final WalletUnit unit;
   final WalletStatus status;
   final String? errorMessage;
 
   WalletState copyWith({
-    double? balance,
+    num? balance,
     WalletUnit? unit,
     WalletStatus? status,
     String? errorMessage,
