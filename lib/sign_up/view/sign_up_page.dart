@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:salamander_app/data/repositories/authentication_repository.dart';
-import 'package:salamander_app/data/repositories/wallet/wallet_repository.dart';
 import 'package:salamander_app/sign_up/sign_up.dart';
 
 class SignUpPage extends StatelessWidget {
@@ -27,8 +26,8 @@ class SignUpPage extends StatelessWidget {
           ),
           child: BlocProvider<SignUpCubit>(
             create: (context) => SignUpCubit(
-                context.read<AuthenticationRepository>(),
-                context.read<WalletRepository>()),
+              context.read<AuthenticationRepository>(),
+            ),
             child: const SignUpForm(),
           )),
     );

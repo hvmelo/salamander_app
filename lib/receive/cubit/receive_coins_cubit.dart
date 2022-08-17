@@ -7,7 +7,7 @@ part 'receive_coins_state.dart';
 class ReceiveCoinsCubit extends Cubit<ReceiveCoinsState> {
   ReceiveCoinsCubit({required WalletRepository walletRepository})
       : _walletRepository = walletRepository,
-        super(ReceiveCoinsInitial());
+        super(const ReceiveCoinsState(address: "address"));
 
   final WalletRepository _walletRepository;
 }

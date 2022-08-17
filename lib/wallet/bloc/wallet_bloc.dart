@@ -112,9 +112,8 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
   }
 
   num unitCorrectedBalance(Wallet wallet) {
-    var balanceInSats = wallet.balance != null
-        ? wallet.balance!['total_settled'] as num
-        : 0 as num;
+    var balanceInSats =
+        wallet.balance != null ? wallet.balance!['total_settled'] as num : 0;
 
     var correctedBalance =
         state.unit == WalletUnit.bitcoin ? toBTC(balanceInSats) : balanceInSats;
@@ -122,11 +121,11 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
     return correctedBalance;
   }
 
-  double toBTC(double balanceInSats) {
+  num toBTC(num balanceInSats) {
     return balanceInSats / 100000000;
   }
 
-  double toSatoshi(double balanceInBTC) {
+  num toSatoshi(num balanceInBTC) {
     return balanceInBTC * 100000000;
   }
 

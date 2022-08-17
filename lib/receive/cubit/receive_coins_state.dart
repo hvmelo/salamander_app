@@ -1,10 +1,10 @@
 part of 'receive_coins_cubit.dart';
 
-abstract class ReceiveCoinsState extends Equatable {
-  const ReceiveCoinsState();
+class ReceiveCoinsState extends Equatable {
+  const ReceiveCoinsState({required this.address});
+
+  final String address;
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [address];
 }
-
-class ReceiveCoinsInitial extends ReceiveCoinsState {}

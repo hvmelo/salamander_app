@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'package:meta/meta.dart';
 import 'package:salamander_app/data/cache/cache.dart';
@@ -44,6 +43,7 @@ class AuthenticationRepository {
   /// Throws a [SignUpWithEmailAndPasswordFailure] if an exception occurs.
   Future<void> signUp({required String email, required String password}) async {
     try {
+      // ignore: unused_local_variable
       firebase_auth.UserCredential userCredential;
       userCredential = await _firebaseAuth.createUserWithEmailAndPassword(
         email: email,

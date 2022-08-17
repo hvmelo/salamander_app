@@ -3,21 +3,33 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:salamander_app/app/app.dart';
 import 'package:salamander_app/data/repositories/authentication_repository.dart';
+import 'package:salamander_app/data/repositories/wallet/wallet_repository.dart';
+import 'package:salamander_app/data/repositories/wallet_repository.dart';
 import 'package:salamander_app/theme.dart';
 
 class App extends StatelessWidget {
   const App({
     Key? key,
     required AuthenticationRepository authenticationRepository,
+    required WalletRepository walletRepository,
   })  : _authenticationRepository = authenticationRepository,
+        _walletRepository = walletRepository,
         super(key: key);
 
   final AuthenticationRepository _authenticationRepository;
+  final WalletRepository _walletRepository;
 
   @override
   Widget build(BuildContext context) {
-    return RepositoryProvider.value(
-      value: _authenticationRepository,
+    return MultiRepositoryProvider(
+      providers: [
+        RepositoryProvider<AuthenticationRepository>.value(
+          value: _authenticationRepository,
+        ),
+        RepositoryProvider<WalletRepository>.value(
+          value: _walletRepository,
+        )
+      ],
       child: BlocProvider(
         create: (_) =>
             AppBloc(authenticationRepository: _authenticationRepository),

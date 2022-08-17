@@ -14,14 +14,11 @@ class WalletPage extends StatelessWidget {
       body: Container(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
-        child: RepositoryProvider(
-          create: (context) => WalletRepository(),
-          child: BlocProvider<WalletBloc>(
-            create: (context) =>
-                WalletBloc(walletRepository: context.read<WalletRepository>())
-                  ..add(WalletInit()),
-            child: const WalletView(),
-          ),
+        child: BlocProvider<WalletBloc>(
+          create: (context) => WalletBloc(
+            walletRepository: context.read<WalletRepository>(),
+          )..add(WalletInit()),
+          child: const WalletView(),
         ),
       ),
     );
