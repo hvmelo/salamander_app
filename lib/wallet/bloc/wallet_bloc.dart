@@ -39,6 +39,7 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
     if (currentWallet != null) {
       emit(state.copyWith(
           balance: unitCorrectedBalance(currentWallet),
+          address: currentWallet.activeAddress,
           status: WalletStatus.synced));
       await _walletSubscription?.cancel();
       _walletSubscription = _walletRepository.wallet?.listen((wallet) {
@@ -82,6 +83,7 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
 
     emit(state.copyWith(
         balance: unitCorrectedBalance(currentWallet),
+        address: currentWallet.activeAddress,
         status: WalletStatus.synced));
     await _walletSubscription?.cancel();
     _walletSubscription = _walletRepository.wallet?.listen((wallet) {
@@ -97,7 +99,10 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
 
   void _onWalletUpdated(WalletUpdated event, Emitter<WalletState> emit) {
     var wallet = event.wallet;
-    emit(state.copyWith(balance: unitCorrectedBalance(wallet)));
+    emit(state.copyWith(
+      balance: unitCorrectedBalance(wallet),
+      address: wallet.activeAddress,
+    ));
   }
 
   void _onWalletUnitChanged(

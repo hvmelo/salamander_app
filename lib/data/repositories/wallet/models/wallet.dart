@@ -8,6 +8,7 @@ class Wallet extends Equatable {
   const Wallet(
       {required this.ownerId,
       this.balance,
+      this.activeAddress,
       this.lastUpdated,
       this.created,
       this.id});
@@ -15,6 +16,7 @@ class Wallet extends Equatable {
   final String ownerId;
   final String? id;
   final Map? balance;
+  final String? activeAddress;
   final Timestamp? lastUpdated;
   final Timestamp? created;
 
@@ -24,12 +26,14 @@ class Wallet extends Equatable {
   Wallet copyWith(
       {String? ownerId,
       Map? balance,
+      String? activeAddress,
       Timestamp? lastUpdated,
       Timestamp? created,
       String? id}) {
     return Wallet(
       ownerId: ownerId ?? this.ownerId,
       balance: balance ?? this.balance,
+      activeAddress: activeAddress ?? this.activeAddress,
       lastUpdated: lastUpdated ?? this.lastUpdated,
       created: lastUpdated ?? this.lastUpdated,
       id: id ?? this.id,
@@ -37,13 +41,15 @@ class Wallet extends Equatable {
   }
 
   @override
-  List<Object?> get props => [ownerId, id, balance, lastUpdated, created];
+  List<Object?> get props =>
+      [ownerId, id, balance, activeAddress, lastUpdated, created];
 
   @override
   String toString() {
     return '''
         Wallet {owner id: $ownerId, 
-        settled balance: ${balance != null ? balance!['total_settled'] : 0}, 
+        settled balance: ${balance != null ? balance!['total_settled'] : 0},
+        active address: ${activeAddress ?? ''}, 
         id: $id, 
         created: $created}, 
         last updated: $lastUpdated}
@@ -51,8 +57,13 @@ class Wallet extends Equatable {
   }
 
   WalletEntity toEntity() {
-    return WalletEntity(id ?? '', ownerId, balance ?? createNewBalance(),
-        created ?? Timestamp.now(), lastUpdated ?? Timestamp.now());
+    return WalletEntity(
+        id ?? '',
+        ownerId,
+        balance ?? createNewBalance(),
+        activeAddress ?? '',
+        created ?? Timestamp.now(),
+        lastUpdated ?? Timestamp.now());
   }
 
   Map<String, Object> createNewBalance() {
@@ -73,6 +84,7 @@ class Wallet extends Equatable {
     return Wallet(
       ownerId: entity.ownerId,
       balance: entity.balance,
+      activeAddress: entity.activeAddress,
       lastUpdated: entity.lastUpdated,
       created: entity.created,
       id: entity.id,

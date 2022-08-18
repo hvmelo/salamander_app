@@ -7,23 +7,27 @@ class WalletState extends Equatable {
   const WalletState(
       {this.balance = 0,
       this.unit = WalletUnit.bitcoin,
+      this.address = '',
       this.status = WalletStatus.initial,
       this.errorMessage = ''});
 
   final num balance;
   final WalletUnit unit;
   final WalletStatus status;
+  final String address;
   final String? errorMessage;
 
   WalletState copyWith({
     num? balance,
     WalletUnit? unit,
+    String? address,
     WalletStatus? status,
     String? errorMessage,
   }) {
     return WalletState(
         balance: balance ?? this.balance,
         unit: unit ?? this.unit,
+        address: address ?? this.address,
         status: status ?? this.status,
         errorMessage: errorMessage ?? this.errorMessage);
   }
@@ -47,5 +51,5 @@ class WalletState extends Equatable {
   }
 
   @override
-  List<Object> get props => [balance, unit, status];
+  List<Object> get props => [balance, unit, address, status];
 }
