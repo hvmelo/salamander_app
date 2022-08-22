@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class BottomUpPageRoute<T> extends MaterialPageRoute<T> {
   BottomUpPageRoute({required WidgetBuilder builder, RouteSettings? settings})
-      : super(builder: builder, settings: settings);
+      : super(builder: builder, settings: settings, fullscreenDialog: true);
 
   @override
   Widget buildTransitions(BuildContext context, Animation<double> animation,

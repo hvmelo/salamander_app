@@ -12,3 +12,8 @@ class Init extends SendCoinsEvent {}
 class ManualEntryRequested extends SendCoinsEvent {}
 
 class QRCodeRead extends SendCoinsEvent {}
+
+class QRViewCreated extends SendCoinsEvent {
+  QRViewCreated(this.controller);
+  final QRViewController controller;
+}

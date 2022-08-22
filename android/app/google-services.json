@@ -1,40 +1,40 @@
 {
   "project_info": {
-    "project_number": "553796073487",
-    "project_id": "crypto-wallet-69335",
-    "storage_bucket": "crypto-wallet-69335.appspot.com"
+    "project_number": "1009825970142",
+    "project_id": "salamander-cloud",
+    "storage_bucket": "salamander-cloud.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:553796073487:android:46c495713c392864f0cb7a",
+        "mobilesdk_app_id": "1:1009825970142:android:c9586bacdf13455f34cf4f",
         "android_client_info": {
-          "package_name": "com.example.crypto_wallet"
+          "package_name": "com.salamander.salamander_app"
         }
       },
       "oauth_client": [
         {
-          "client_id": "553796073487-cmd116if9f7hbk59mc1d5ijp18irrgki.apps.googleusercontent.com",
+          "client_id": "1009825970142-7lgtndv9h7r5siu2k3pmbnmi5u6bevda.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDfDA-bROAT2Hnmga8Xbrq7J45NZN5EkD4"
+          "current_key": "AIzaSyDh_4wEeIDgHkaQVbdPDsrNztGGSM_0P_k"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "553796073487-cmd116if9f7hbk59mc1d5ijp18irrgki.apps.googleusercontent.com",
+              "client_id": "1009825970142-7lgtndv9h7r5siu2k3pmbnmi5u6bevda.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "553796073487-2auj105jr2ki2qj1pmsnccim2rlu2ris.apps.googleusercontent.com",
+              "client_id": "1009825970142-1uusa60ctftt8366urnf5m3eh7g224tf.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.example.cryptoWallet"
+                "bundle_id": "com.salamander.SalamanderApp"
               }
             }
           ]

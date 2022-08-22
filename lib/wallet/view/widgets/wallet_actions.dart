@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:salamander_app/send/send_coins.dart';
 import 'package:salamander_app/util/transitions.dart';
 import 'package:salamander_app/wallet/wallet.dart';
 
@@ -36,7 +37,8 @@ class WalletActions extends StatelessWidget {
                   label: const Text('SEND'),
                   icon: const Icon(Icons.upload),
                   onPressed: state.status == WalletStatus.synced
-                      ? () => _displaySendDialog(context, state.address)
+                      ? () => Navigator.of(context)
+                          .push<void>(SendCoinsPage.route())
                       : null,
                 ),
               ),
@@ -56,19 +58,6 @@ class WalletActions extends StatelessWidget {
       },
       pageBuilder: (context, animation, secondaryAnimation) {
         return ReceiveCoinsDialog(address: address);
-      },
-    );
-  }
-
-  void _displaySendDialog(BuildContext context, String address) {
-    showGeneralDialog(
-      context: context,
-      transitionDuration: const Duration(milliseconds: 300),
-      transitionBuilder: (context, animation, secondaryAnimation, child) {
-        return BottomUpTransition(animation: animation, child: child);
-      },
-      pageBuilder: (context, animation, secondaryAnimation) {
-        return SendCoinsDialog(address: address);
       },
     );
   }
