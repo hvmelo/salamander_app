@@ -1,8 +1,7 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:salamander_app/receive/receive_coins.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import 'package:salamander_app/receive/receive_coins.dart';
 
 class ReceiveCoinsView extends StatelessWidget {
   const ReceiveCoinsView({Key? key}) : super(key: key);

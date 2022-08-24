@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.10)
 project(runner LANGUAGES CXX)
 
-set(BINARY_NAME "flutter_shopping_cart")
-set(APPLICATION_ID "com.example.flutter_shopping_cart")
+set(BINARY_NAME "Salamander")
+set(APPLICATION_ID "com.salamander.salamander_app")
 
 cmake_policy(SET CMP0063 NEW)
 

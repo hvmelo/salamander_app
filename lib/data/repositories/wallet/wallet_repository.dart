@@ -50,6 +50,7 @@ class WalletRepository {
     } else {
       return _currentWallet;
     }
+    return null;
   }
 
   Future<Wallet?> createWallet() async {

@@ -1,4 +1,4 @@
-package com.example.flutter_shopping_cart
+package com.salamander.salamander_app
 
 import io.flutter.embedding.android.FlutterActivity
 

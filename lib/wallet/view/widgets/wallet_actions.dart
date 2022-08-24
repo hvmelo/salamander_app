@@ -37,8 +37,8 @@ class WalletActions extends StatelessWidget {
                   label: const Text('SEND'),
                   icon: const Icon(Icons.upload),
                   onPressed: state.status == WalletStatus.synced
-                      ? () => Navigator.of(context)
-                          .push<void>(SendCoinsPage.route())
+                      ? () =>
+                          Navigator.of(context).push<void>(QRScanPage.route())
                       : null,
                 ),
               ),

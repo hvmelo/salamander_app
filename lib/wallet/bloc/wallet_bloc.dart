@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:salamander_app/data/repositories/wallet/wallet_repository.dart';
 import 'package:salamander_app/data/repositories/wallet_repository.dart';
 
 part 'wallet_event.dart';

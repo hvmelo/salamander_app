@@ -83,15 +83,9 @@ class ReceiveCoinsDialog extends StatelessWidget {
               ),
             ),
             Container(
-              height: 100,
+              height: 70,
               child: Column(
                 children: [
-                  Expanded(
-                    child: Container(),
-                  ),
-                  Expanded(
-                    child: Container(),
-                  ),
                   ElevatedButton.icon(
                     onPressed: () {
                       // Respond to button press
@@ -109,7 +103,6 @@ class ReceiveCoinsDialog extends StatelessWidget {
                       primary: Colors.blueGrey[900],
                     ),
                   ),
-                  const SizedBox(height: 10)
                 ],
               ),
             ),

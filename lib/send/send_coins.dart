@@ -1,3 +1,3 @@
-export 'bloc/send_coins_bloc.dart';
-export 'view/send_coins_page.dart';
-export 'view/send_coins_view.dart';
+export 'cubit/qr_scan/qr_scan_cubit.dart';
+export 'view/qr_scan/qr_scan_page.dart';
+export 'view/qr_scan/qr_scan_view.dart';

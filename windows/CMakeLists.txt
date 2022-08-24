@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.15)
-project(flutter_shopping_cart LANGUAGES CXX)
+project(salamander LANGUAGES CXX)
 
-set(BINARY_NAME "flutter_shopping_cart")
+set(BINARY_NAME "salamander")
 
 cmake_policy(SET CMP0063 NEW)
 

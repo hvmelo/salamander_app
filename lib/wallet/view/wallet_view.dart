@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:salamander_app/app/view/drawer.dart';
 import 'package:salamander_app/wallet/view/widgets.dart';
-import 'package:salamander_app/wallet/view/widgets/wallet_setup.dart';
 import 'package:salamander_app/wallet/wallet.dart';
 
 class WalletView extends StatelessWidget {

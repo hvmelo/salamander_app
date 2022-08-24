@@ -5,7 +5,6 @@ import 'package:meta/meta.dart';
 import 'package:salamander_app/data/cache/cache.dart';
 import 'package:salamander_app/data/repositories/authentication_repository.dart';
 
-import 'exceptions/authentication_exception.dart';
 
 class AuthenticationRepository {
   AuthenticationRepository({
