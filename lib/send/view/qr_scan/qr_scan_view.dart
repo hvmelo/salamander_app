@@ -1,21 +1,22 @@
+import 'package:flow_builder/flow_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
-import 'package:salamander_app/send/send_coins.dart';
+import 'package:salamander_app/send/bloc/send_coins_bloc.dart';
 
 class QRScanView extends StatelessWidget {
   const QRScanView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<QRScanCubit, QRScanState>(
+    return BlocConsumer<SendCoinsBloc, SendCoinsState>(
       listener: (context, state) {
-        if (state is QRScanCodeRead) {
-          //Navigator.of(context).push(route)
-        }
+        // if (state is QRScanCodeRead) {
+        //   //Navigator.of(context).push(route)
+        // }
       },
       builder: (context, state) {
-        var scanArea = MediaQuery.of(context).size.width * 0.6;
+        var scanArea = MediaQuery.of(context).size.width * 0.5;
         return Scaffold(
           backgroundColor: Colors.black,
           extendBodyBehindAppBar: false,
@@ -23,7 +24,7 @@ class QRScanView extends StatelessWidget {
             backgroundColor: Colors.transparent,
             elevation: 0.0,
             leading: GestureDetector(
-              onTap: () => Navigator.of(context).pop(),
+              onTap: () => context.flow<SendCoinsState>().complete(),
               child: const Icon(Icons.close),
             ),
             title: const Text(
@@ -35,19 +36,23 @@ class QRScanView extends StatelessWidget {
             color: Colors.black,
             child: Stack(
               children: <Widget>[
-                QRView(
-                  key: state.qrKey,
-                  onQRViewCreated: (controller) =>
-                      context.read<QRScanCubit>().qrViewCreated(controller),
-                  overlay: QrScannerOverlayShape(
-                      borderColor: Colors.blue,
-                      borderRadius: 15,
-                      borderLength: 20,
-                      borderWidth: 15,
-                      overlayColor: const Color.fromRGBO(0, 0, 0, 60),
-                      cutOutSize: scanArea),
-                  onPermissionSet: (ctrl, p) =>
-                      _onPermissionSet(context, ctrl, p),
+                Visibility(
+                  visible: state.entryType == AddressEntryType.qrcode,
+                  child: QRView(
+                    key: GlobalKey(debugLabel: 'QR'),
+                    onQRViewCreated: (controller) => context
+                        .read<SendCoinsBloc>()
+                        .add(QRViewCreated(controller)),
+                    overlay: QrScannerOverlayShape(
+                        borderColor: Colors.blue,
+                        borderRadius: 15,
+                        borderLength: 20,
+                        borderWidth: 15,
+                        overlayColor: const Color.fromRGBO(0, 0, 0, 60),
+                        cutOutSize: scanArea),
+                    onPermissionSet: (ctrl, p) =>
+                        _onPermissionSet(context, ctrl, p),
+                  ),
                 ),
                 Column(
                   children: [
@@ -60,15 +65,17 @@ class QRScanView extends StatelessWidget {
                         children: [
                           ElevatedButton.icon(
                             onPressed: () {
-                              // Respond to button press
+                              context
+                                  .read<SendCoinsBloc>()
+                                  .add(ManualEntryRequested());
                             },
                             icon: const Icon(
                               Icons.edit,
                               size: 20,
                             ),
                             label: const Text(
-                              'MANUAL ENTER',
-                              style: TextStyle(fontSize: 16),
+                              'Enter address manually',
+                              style: TextStyle(fontSize: 14),
                             ),
                             style: ElevatedButton.styleFrom(
                               primary: Colors.blueGrey[900],
@@ -91,7 +98,7 @@ class QRScanView extends StatelessWidget {
     //log('${DateTime.now().toIso8601String()}_onPermissionSet $p');
     if (!p) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('no Permission')),
+        const SnackBar(content: Text('No permission to access the camera')),
       );
     }
   }
