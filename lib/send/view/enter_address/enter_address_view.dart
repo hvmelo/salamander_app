@@ -75,7 +75,9 @@ class EnterAddressView extends StatelessWidget {
                     style: const TextStyle(
                       color: Colors.white,
                     ),
-                    onChanged: null,
+                    onChanged: (address) => context
+                        .read<SendCoinsBloc>()
+                        .add(InputAddressChanged(address)),
                     decoration: const InputDecoration(
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.white),

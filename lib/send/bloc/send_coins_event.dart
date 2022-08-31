@@ -18,6 +18,13 @@ class ManualEntryRequested extends SendCoinsEvent {}
 
 class QRScanRequested extends SendCoinsEvent {}
 
+class InputAddressChanged extends SendCoinsEvent {
+  InputAddressChanged(this.address);
+  final String address;
+}
+
+class PasteFromClipboardRequested extends SendCoinsEvent {}
+
 class AddressEntered extends SendCoinsEvent {
   AddressEntered(this.address);
   final String address;

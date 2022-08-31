@@ -37,7 +37,7 @@ class QRScanView extends StatelessWidget {
             child: Stack(
               children: <Widget>[
                 Visibility(
-                  visible: state.entryType == AddressEntryType.qrcode,
+                  visible: state is SendCoinsQRReadState,
                   child: QRView(
                     key: GlobalKey(debugLabel: 'QR'),
                     onQRViewCreated: (controller) => context

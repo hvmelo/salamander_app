@@ -5,19 +5,33 @@ enum AddressType { onchain, lightning }
 enum AddressEntryType { qrcode, manual }
 
 class SendCoinsState extends Equatable {
-  const SendCoinsState({this.entryType = AddressEntryType.qrcode});
-
-  final AddressEntryType entryType;
+  const SendCoinsState();
 
   @override
-  List<Object> get props => [entryType];
+  List<Object> get props => [];
+}
 
-  SendCoinsState copyWith({
-    AddressEntryType? entryType,
-    bool? shouldEndFlow,
+class SendCoinsQRReadState extends SendCoinsState {
+  const SendCoinsQRReadState();
+  static const initial = SendCoinsQRReadState();
+}
+
+class SendCoinsManualEnterState extends SendCoinsState {
+  const SendCoinsManualEnterState({required this.value});
+  final String value;
+
+  static const initial = SendCoinsManualEnterState(value: '');
+
+  SendCoinsManualEnterState copyWith({
+    String? value,
   }) {
-    return SendCoinsState(entryType: entryType ?? this.entryType);
+    return SendCoinsManualEnterState(
+      value: value ?? this.value,
+    );
   }
+
+  @override
+  List<Object> get props => [value];
 }
 
 class SendCoinsOnChainState extends SendCoinsState {
@@ -26,7 +40,7 @@ class SendCoinsOnChainState extends SendCoinsState {
   final num? amountInSats;
 
   @override
-  List<Object> get props => [address, amountInSats ?? 0, entryType];
+  List<Object> get props => [address, amountInSats ?? 0];
 }
 
 class SendCoinsLightningState extends SendCoinsState {
@@ -34,10 +48,8 @@ class SendCoinsLightningState extends SendCoinsState {
   final String invoice;
 
   @override
-  List<Object> get props => [invoice, entryType];
+  List<Object> get props => [invoice];
 }
-
-class EnterAddressInitial extends SendCoinsState {}
 
 class EnterAmountInitial extends SendCoinsState {}
 

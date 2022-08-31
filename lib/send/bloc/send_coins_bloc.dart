@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/services.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:salamander_app/data/repositories/wallet_repository.dart';
 
@@ -12,9 +13,10 @@ class SendCoinsBloc extends Bloc<SendCoinsEvent, SendCoinsState> {
         super(const SendCoinsState()) {
     on<ManualEntryRequested>(_onManualEntryRequested);
     on<QRScanRequested>(_onQRScanRequested);
-
     on<QRCodeRead>(_onQRCodeRead);
     on<QRViewCreated>(_onQRCodeCreated);
+    on<InputAddressChanged>(_onInputAddressChanged);
+    on<PasteFromClipboardRequested>(_onPasteFromClipboardRequested);
   }
 
   final WalletRepository _walletRepository;
@@ -23,15 +25,27 @@ class SendCoinsBloc extends Bloc<SendCoinsEvent, SendCoinsState> {
   void _onManualEntryRequested(
       ManualEntryRequested event, Emitter<SendCoinsState> emit) {
     _qrViewController?.stopCamera();
-
-    emit(state.copyWith(entryType: AddressEntryType.manual));
+    emit(SendCoinsManualEnterState.initial);
   }
 
   void _onQRScanRequested(QRScanRequested event, Emitter<SendCoinsState> emit) {
-    emit(state.copyWith(entryType: AddressEntryType.qrcode));
+    emit(SendCoinsQRReadState.initial);
   }
 
   void _onQRCodeRead(QRCodeRead event, Emitter<SendCoinsState> emit) {}
+
+  void _onInputAddressChanged(
+      InputAddressChanged event, Emitter<SendCoinsState> emit) {
+    var theState = state as SendCoinsManualEnterState;
+    emit(theState.copyWith(value: event.address));
+  }
+
+  Future<void> _onPasteFromClipboardRequested(
+      PasteFromClipboardRequested event, Emitter<SendCoinsState> emit) async {
+    var cdata = await Clipboard.getData(Clipboard.kTextPlain);
+    var copiedtext = cdata?.text;
+    print(copiedtext);
+  }
 
   Future<void> _onQRCodeCreated(
       QRViewCreated event, Emitter<SendCoinsState> emit) async {

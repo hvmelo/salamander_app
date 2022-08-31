@@ -2,10 +2,8 @@ import 'package:flow_builder/flow_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:salamander_app/data/repositories/wallet_repository.dart';
-import '../../util/page_routes.dart';
-import '../bloc/send_coins_bloc.dart';
-import '../send_coins.dart';
-import 'enter_address/enter_address_page.dart';
+import 'package:salamander_app/send/send_coins.dart';
+import 'package:salamander_app/util/page_routes.dart';
 
 class SendCoinsPage extends StatelessWidget {
   const SendCoinsPage({Key? key}) : super(key: key);
@@ -25,7 +23,8 @@ class SendCoinsPage extends StatelessWidget {
         color: Colors.amber,
         child: BlocProvider<SendCoinsBloc>(
           create: (context) =>
-              SendCoinsBloc(walletRepository: context.read<WalletRepository>()),
+              SendCoinsBloc(walletRepository: context.read<WalletRepository>())
+                ..add(QRScanRequested()),
           child: const SendCoinsFlow(),
         ),
       ),
@@ -39,7 +38,7 @@ class SendCoinsFlow extends StatelessWidget {
   List<Page> onGeneratePages(SendCoinsState state, List<Page> pages) {
     return [
       QRScanPage.page(),
-      if (state.entryType == AddressEntryType.manual) EnterAddressPage.page()
+      if (state is SendCoinsManualEnterState) EnterAddressPage.page()
     ];
   }
 
