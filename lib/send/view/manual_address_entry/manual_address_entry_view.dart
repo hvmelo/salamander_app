@@ -5,8 +5,8 @@ import 'package:salamander_app/send/bloc/send_coins_bloc.dart';
 import 'widgets/address_or_invoice_input.dart';
 import 'widgets/paste_from_clipboard_button.dart';
 
-class EnterManuallyView extends StatelessWidget {
-  const EnterManuallyView({Key? key}) : super(key: key);
+class ManualAddressEntryView extends StatelessWidget {
+  const ManualAddressEntryView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'enter_manually_view.dart';
+import 'manual_address_entry_view.dart';
 
-class EnterManuallyPage extends StatelessWidget {
-  const EnterManuallyPage({Key? key}) : super(key: key);
+class ManualAddressEntryPage extends StatelessWidget {
+  const ManualAddressEntryPage({Key? key}) : super(key: key);
 
   static Page page() {
     return const MaterialPage<void>(
-      child: EnterManuallyPage(),
+      child: ManualAddressEntryPage(),
     );
   }
 
@@ -16,7 +16,7 @@ class EnterManuallyPage extends StatelessWidget {
       body: Container(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
-        child: const EnterManuallyView(),
+        child: const ManualAddressEntryView(),
       ),
     );
   }

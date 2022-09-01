@@ -7,16 +7,18 @@ abstract class SendCoinsEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class QRViewCreated extends SendCoinsEvent {
-  QRViewCreated(this.controller);
-  final QRViewController controller;
-}
-
-class QRCodeRead extends SendCoinsEvent {}
-
-class ManualEntryRequested extends SendCoinsEvent {}
+/* QR Scanner events */
 
 class QRScanRequested extends SendCoinsEvent {}
+
+class QRCodeRead extends SendCoinsEvent {
+  QRCodeRead(this.code);
+  final String code;
+}
+
+/* Manual Entry events */
+
+class ManualEntryRequested extends SendCoinsEvent {}
 
 class InputAddressChanged extends SendCoinsEvent {
   InputAddressChanged(this.address);
