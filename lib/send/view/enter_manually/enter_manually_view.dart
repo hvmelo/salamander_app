@@ -5,36 +5,13 @@ import 'package:salamander_app/send/bloc/send_coins_bloc.dart';
 import 'widgets/address_or_invoice_input.dart';
 import 'widgets/paste_from_clipboard_button.dart';
 
-class EnterManuallyView extends StatefulWidget {
+class EnterManuallyView extends StatelessWidget {
   const EnterManuallyView({Key? key}) : super(key: key);
-
-  @override
-  State<EnterManuallyView> createState() => _EnterManuallyViewState();
-}
-
-class _EnterManuallyViewState extends State<EnterManuallyView> {
-  final inputAddressController = TextEditingController();
-
-  @override
-  void initState() {
-    super.initState();
-    // Start listening to changes.
-    inputAddressController.addListener(() => context
-        .read<SendCoinsBloc>()
-        .add(InputAddressChanged(inputAddressController.text)));
-  }
-
-  @override
-  void dispose() {
-    // Clean up the controller when the widget is removed from the widget tree.
-    // This also removes the _printLatestValue listener.
-    inputAddressController.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<SendCoinsBloc, SendCoinsState>(
+      buildWhen: (previous, current) => current is SendCoinsManualEnterState,
       builder: (context, state) {
         return Scaffold(
           backgroundColor: Colors.black,

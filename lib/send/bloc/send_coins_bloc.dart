@@ -1,6 +1,5 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/services.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:salamander_app/data/repositories/wallet_repository.dart';
 

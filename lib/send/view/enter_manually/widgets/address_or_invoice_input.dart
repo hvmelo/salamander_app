@@ -33,10 +33,12 @@ class _AddressOrInvoiceInputState extends State<AddressOrInvoiceInput> {
   Widget build(BuildContext context) {
     return BlocListener<SendCoinsBloc, SendCoinsState>(
       listenWhen: (previous, current) {
-        var previousState = previous as SendCoinsManualEnterState;
-        var currentState = current as SendCoinsManualEnterState;
-        return previousState.value != currentState.value &&
-            inputAddressController.text != currentState.value;
+        if (current is SendCoinsManualEnterState &&
+            previous is SendCoinsManualEnterState) {
+          return previous.value != current.value &&
+              inputAddressController.text != current.value;
+        }
+        return false;
       },
       listener: (context, state) {
         var currentState = state as SendCoinsManualEnterState;
