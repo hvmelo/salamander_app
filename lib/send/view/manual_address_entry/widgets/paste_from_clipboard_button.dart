@@ -3,15 +3,16 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:salamander_app/send/send_coins.dart';
 
-class PasteFromClipboardButton extends StatefulWidget {
-  PasteFromClipboardButton({Key? key}) : super(key: key);
+class ManualAddressEntryPasteButton extends StatefulWidget {
+  ManualAddressEntryPasteButton({Key? key}) : super(key: key);
 
   @override
-  State<PasteFromClipboardButton> createState() =>
-      _PasteFromClipboardButtonState();
+  State<ManualAddressEntryPasteButton> createState() =>
+      _ManualAddressEntryPasteButtonState();
 }
 
-class _PasteFromClipboardButtonState extends State<PasteFromClipboardButton> {
+class _ManualAddressEntryPasteButtonState
+    extends State<ManualAddressEntryPasteButton> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<SendCoinsBloc, SendCoinsState>(

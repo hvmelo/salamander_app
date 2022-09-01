@@ -2,14 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:salamander_app/send/send_coins.dart';
 
-class AddressOrInvoiceInput extends StatefulWidget {
-  AddressOrInvoiceInput({Key? key}) : super(key: key);
+class ManualAddressEntryAddressInput extends StatefulWidget {
+  ManualAddressEntryAddressInput({Key? key}) : super(key: key);
 
   @override
-  State<AddressOrInvoiceInput> createState() => _AddressOrInvoiceInputState();
+  State<ManualAddressEntryAddressInput> createState() =>
+      _ManualAddressEntryAddressInputState();
 }
 
-class _AddressOrInvoiceInputState extends State<AddressOrInvoiceInput> {
+class _ManualAddressEntryAddressInputState
+    extends State<ManualAddressEntryAddressInput> {
   final inputAddressController = TextEditingController();
 
   @override
