@@ -23,7 +23,10 @@ class InputAddressChanged extends SendCoinsEvent {
   final String address;
 }
 
-class PasteFromClipboardRequested extends SendCoinsEvent {}
+class PasteFromClipboardRequested extends SendCoinsEvent {
+  PasteFromClipboardRequested(this.text);
+  final String text;
+}
 
 class AddressEntered extends SendCoinsEvent {
   AddressEntered(this.address);

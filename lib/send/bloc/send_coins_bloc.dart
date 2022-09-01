@@ -40,11 +40,11 @@ class SendCoinsBloc extends Bloc<SendCoinsEvent, SendCoinsState> {
     emit(theState.copyWith(value: event.address));
   }
 
-  Future<void> _onPasteFromClipboardRequested(
-      PasteFromClipboardRequested event, Emitter<SendCoinsState> emit) async {
-    var cdata = await Clipboard.getData(Clipboard.kTextPlain);
-    var copiedtext = cdata?.text;
-    print(copiedtext);
+  void _onPasteFromClipboardRequested(
+      PasteFromClipboardRequested event, Emitter<SendCoinsState> emit) {
+    var copiedtext = event.text;
+    var theState = state as SendCoinsManualEnterState;
+    emit(theState.copyWith(value: copiedtext));
   }
 
   Future<void> _onQRCodeCreated(

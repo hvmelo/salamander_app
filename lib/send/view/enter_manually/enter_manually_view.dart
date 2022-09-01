@@ -2,9 +2,35 @@ import 'package:flow_builder/flow_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:salamander_app/send/bloc/send_coins_bloc.dart';
+import 'widgets/address_or_invoice_input.dart';
+import 'widgets/paste_from_clipboard_button.dart';
 
-class EnterAddressView extends StatelessWidget {
-  const EnterAddressView({Key? key}) : super(key: key);
+class EnterManuallyView extends StatefulWidget {
+  const EnterManuallyView({Key? key}) : super(key: key);
+
+  @override
+  State<EnterManuallyView> createState() => _EnterManuallyViewState();
+}
+
+class _EnterManuallyViewState extends State<EnterManuallyView> {
+  final inputAddressController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    // Start listening to changes.
+    inputAddressController.addListener(() => context
+        .read<SendCoinsBloc>()
+        .add(InputAddressChanged(inputAddressController.text)));
+  }
+
+  @override
+  void dispose() {
+    // Clean up the controller when the widget is removed from the widget tree.
+    // This also removes the _printLatestValue listener.
+    inputAddressController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,27 +92,7 @@ class EnterAddressView extends StatelessWidget {
                 ),
                 Expanded(
                   flex: 2,
-                  child: TextFormField(
-                    key: const Key('sendCoins_addressInput_textField'),
-                    minLines:
-                        20, // any number you need (It works as the rows for the textarea)
-                    keyboardType: TextInputType.multiline,
-                    maxLines: null,
-                    style: const TextStyle(
-                      color: Colors.white,
-                    ),
-                    onChanged: (address) => context
-                        .read<SendCoinsBloc>()
-                        .add(InputAddressChanged(address)),
-                    decoration: const InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white),
-                      ),
-                    ),
-                  ),
+                  child: AddressOrInvoiceInput(),
                 ),
                 Expanded(
                   flex: 1,
@@ -94,20 +100,7 @@ class EnterAddressView extends StatelessWidget {
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(top: 20),
-                        child: ElevatedButton.icon(
-                          onPressed: () {},
-                          icon: const Icon(
-                            Icons.paste,
-                            size: 20,
-                          ),
-                          label: const Text(
-                            'Paste from Clipboard',
-                            style: TextStyle(fontSize: 14),
-                          ),
-                          style: ElevatedButton.styleFrom(
-                            primary: const Color.fromARGB(255, 4, 96, 171),
-                          ),
-                        ),
+                        child: PasteFromClipboardButton(),
                       ),
                       Expanded(
                         child: Container(),
