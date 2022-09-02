@@ -38,7 +38,7 @@ class SendCoinsFlow extends StatelessWidget {
   List<Page> onGeneratePages(SendCoinsState state, List<Page> pages) {
     return [
       QRScanPage.page(),
-      if (state is SendCoinsManualEnterState) ManualAddressEntryPage.page()
+      if (state is SendCoinsManualEntryState) ManualAddressInputPage.page()
     ];
   }
 

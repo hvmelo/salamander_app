@@ -4,14 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:salamander_app/send/bloc/send_coins_bloc.dart';
 import 'package:salamander_app/send/view/qr_scan/widgets/qr_view_widget.dart';
 
-class QRScanView extends StatefulWidget {
+class QRScanView extends StatelessWidget {
   const QRScanView({Key? key}) : super(key: key);
 
-  @override
-  State<QRScanView> createState() => _QRScanViewState();
-}
-
-class _QRScanViewState extends State<QRScanView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

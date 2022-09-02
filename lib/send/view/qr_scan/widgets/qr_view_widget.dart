@@ -21,9 +21,7 @@ class _QRViewWidgetState extends State<QRViewWidget> {
   @override
   void reassemble() {
     super.reassemble();
-    if (Platform.isAndroid) {
-      qrViewController!.pauseCamera();
-    } else if (Platform.isIOS) {
+    if (Platform.isIOS) {
       qrViewController!.resumeCamera();
     }
   }
@@ -36,28 +34,36 @@ class _QRViewWidgetState extends State<QRViewWidget> {
 
   @override
   Widget build(BuildContext context) {
-    var scanArea = MediaQuery.of(context).size.width * 0.5;
+    var scanArea = MediaQuery.of(context).size.width * 0.7;
     return BlocBuilder<SendCoinsBloc, SendCoinsState>(
       builder: (context, state) {
-        return QRView(
-          key: qrKey,
-          onQRViewCreated: (controller) {
-            qrViewController = controller;
-            controller.scannedDataStream.listen((scanData) {
-              var code = scanData.code;
-              if (code != null) {
-                context.read<SendCoinsBloc>().add(QRCodeRead(code));
+        return Visibility(
+          visible: state is SendCoinsQRReadState,
+          child: QRView(
+            key: qrKey,
+            onQRViewCreated: (controller) async {
+              qrViewController = controller;
+              try {
+                await qrViewController?.resumeCamera();
+                qrViewController?.scannedDataStream.listen((scanData) {
+                  var code = scanData.code;
+                  if (code != null) {
+                    context.read<SendCoinsBloc>().add(QRCodeRead(code));
+                  }
+                });
+              } on CameraException catch (_) {
+                _onCameraException();
               }
-            });
-          },
-          overlay: QrScannerOverlayShape(
-              borderColor: Colors.blue,
-              borderRadius: 15,
-              borderLength: 20,
-              borderWidth: 15,
-              overlayColor: const Color.fromRGBO(0, 0, 0, 60),
-              cutOutSize: scanArea),
-          onPermissionSet: (ctrl, p) => _onPermissionSet(context, ctrl, p),
+            },
+            overlay: QrScannerOverlayShape(
+                borderColor: const Color.fromARGB(255, 203, 83, 83),
+                borderRadius: 10,
+                borderLength: 20,
+                borderWidth: 10,
+                overlayColor: const Color.fromRGBO(0, 0, 0, 60),
+                cutOutSize: scanArea),
+            onPermissionSet: (ctrl, p) => _onPermissionSet(context, ctrl, p),
+          ),
         );
       },
     );
@@ -70,5 +76,12 @@ class _QRViewWidgetState extends State<QRViewWidget> {
         const SnackBar(content: Text('No permission to access the camera')),
       );
     }
+  }
+
+  void _onCameraException() {
+    //log('${DateTime.now().toIso8601String()}_onPermissionSet $p');
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('The camera is not available')),
+    );
   }
 }

@@ -2,12 +2,12 @@ import 'package:flow_builder/flow_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:salamander_app/send/bloc/send_coins_bloc.dart';
-import 'package:salamander_app/send/view/manual_address_entry/widgets/next_button.dart';
 import 'widgets/address_or_invoice_input.dart';
+import 'widgets/next_button.dart';
 import 'widgets/paste_from_clipboard_button.dart';
 
-class ManualAddressEntryView extends StatelessWidget {
-  const ManualAddressEntryView({Key? key}) : super(key: key);
+class ManualAddressInputView extends StatelessWidget {
+  const ManualAddressInputView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +19,7 @@ class ManualAddressEntryView extends StatelessWidget {
           elevation: 0.0,
           automaticallyImplyLeading: true,
           title: const Text(
-            'ENTER MANUALLY',
+            'MANUAL INPUT',
             style: TextStyle(fontSize: 18),
           ),
           leading: BlocBuilder<SendCoinsBloc, SendCoinsState>(

@@ -16,16 +16,16 @@ class SendCoinsQRReadState extends SendCoinsState {
   static const initial = SendCoinsQRReadState();
 }
 
-class SendCoinsManualEnterState extends SendCoinsState {
-  const SendCoinsManualEnterState({required this.value});
+class SendCoinsManualEntryState extends SendCoinsState {
+  const SendCoinsManualEntryState({required this.value});
   final String value;
 
-  static const initial = SendCoinsManualEnterState(value: '');
+  static const initial = SendCoinsManualEntryState(value: '');
 
-  SendCoinsManualEnterState copyWith({
+  SendCoinsManualEntryState copyWith({
     String? value,
   }) {
-    return SendCoinsManualEnterState(
+    return SendCoinsManualEntryState(
       value: value ?? this.value,
     );
   }

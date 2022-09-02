@@ -35,15 +35,15 @@ class _ManualAddressEntryAddressInputState
   Widget build(BuildContext context) {
     return BlocListener<SendCoinsBloc, SendCoinsState>(
       listenWhen: (previous, current) {
-        if (current is SendCoinsManualEnterState &&
-            previous is SendCoinsManualEnterState) {
+        if (current is SendCoinsManualEntryState &&
+            previous is SendCoinsManualEntryState) {
           return previous.value != current.value &&
               inputAddressController.text != current.value;
         }
         return false;
       },
       listener: (context, state) {
-        var currentState = state as SendCoinsManualEnterState;
+        var currentState = state as SendCoinsManualEntryState;
         inputAddressController.text = currentState.value;
       },
       child: TextField(
