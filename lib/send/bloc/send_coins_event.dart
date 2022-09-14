@@ -30,9 +30,8 @@ class PasteFromClipboardRequested extends SendCoinsEvent {
   final String text;
 }
 
-class AddressEntered extends SendCoinsEvent {
-  AddressEntered(this.address);
-  final String address;
+class ManualInputConfirmed extends SendCoinsEvent {
+  ManualInputConfirmed();
 }
 
 class AmountEntered extends SendCoinsEvent {

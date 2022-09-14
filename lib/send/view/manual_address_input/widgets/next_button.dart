@@ -13,7 +13,7 @@ class ManualAddressEntryNextButton extends StatelessWidget {
           textDirection: TextDirection.rtl,
           child: ElevatedButton.icon(
             onPressed: () {
-              context.read<SendCoinsBloc>().add(ManualEntryRequested());
+              context.read<SendCoinsBloc>().add(ManualInputConfirmed());
             },
             icon: const Icon(
               Icons.arrow_back,
