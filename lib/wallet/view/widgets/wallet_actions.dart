@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:salamander_app/send/send_coins.dart';
-import 'package:salamander_app/send/view/send_coins_page.dart';
+import 'package:salamander_app/send_payment/send_payment_flow.dart';
 import 'package:salamander_app/util/transitions.dart';
 import 'package:salamander_app/wallet/wallet.dart';
 
@@ -38,8 +37,8 @@ class WalletActions extends StatelessWidget {
                   label: const Text('SEND'),
                   icon: const Icon(Icons.upload),
                   onPressed: state.status == WalletStatus.synced
-                      ? () => Navigator.of(context)
-                          .push<void>(SendCoinsPage.route())
+                      ? () async => await Navigator.of(context)
+                          .push(SendPaymentFlow.route())
                       : null,
                 ),
               ),

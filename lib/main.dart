@@ -1,3 +1,6 @@
+import 'dart:async';
+import 'dart:developer';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,11 +15,14 @@ void main() async {
   final walletRepository = WalletRepository();
   await authenticationRepository.user.first;
   //await authenticationRepository.logOut();
-  BlocOverrides.runZoned(
+
+  Bloc.observer = AppBlocObserver();
+
+  runZonedGuarded(
     () => runApp(App(
       authenticationRepository: authenticationRepository,
       walletRepository: walletRepository,
     )),
-    blocObserver: AppBlocObserver(),
+    (error, stackTrace) => log(error.toString(), stackTrace: stackTrace),
   );
 }

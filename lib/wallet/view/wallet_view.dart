@@ -45,8 +45,6 @@ class WalletView extends StatelessWidget {
                         child: Column(
                           children: [
                             const WalletCurrency(),
-                            const SizedBox(height: 15),
-                            //const WalletRefresh(),
                             Expanded(
                               child: Container(),
                             ),
