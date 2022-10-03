@@ -2,52 +2,48 @@ import 'package:flow_builder/flow_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:salamander_app/send_payment/pages/address_input.dart';
+import 'package:salamander_app/send_payment/pages/amount_input/amount_input.dart';
 import 'package:salamander_app/send_payment/send_payment.dart';
 
-class AddressInputView extends StatefulWidget {
-  const AddressInputView({Key? key}) : super(key: key);
+class AmountInputView extends StatefulWidget {
+  const AmountInputView({Key? key}) : super(key: key);
 
   @override
-  State<AddressInputView> createState() => _AddressInputViewState();
+  State<AmountInputView> createState() => _AmountInputViewState();
 }
 
-class _AddressInputViewState extends State<AddressInputView> {
-  final inputAddressController = TextEditingController();
+class _AmountInputViewState extends State<AmountInputView> {
+  final inputAmountController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    var input = context.flow<PaymentFlowData>().state.addressOrInvoiceInput;
-    inputAddressController
-      ..text = input ?? ''
+    inputAmountController
+      //..text = state.input
       ..addListener(() => context
-          .read<AddressInputCubit>()
-          .formInputChanged(inputAddressController.text));
+          .read<AmountInputCubit>()
+          .amountInputChanged(inputAmountController.text));
   }
 
   @override
   void dispose() {
     // Clean up the controller when the widget is removed from the widget tree.
     // This also removes the _printLatestValue listener.
-    inputAddressController.dispose();
+    inputAmountController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<AddressInputCubit, AddressInputState>(
+    return BlocListener<AmountInputCubit, AmountInputState>(
       listener: (context, state) {
         switch (state.status) {
-          case AddressInputStatus.successWithAddress:
-            context.flow<PaymentFlowData>().update((s) => s.copyWith(
-                address: state.address, addressOrInvoiceInput: state.input));
+          case AmountInputStatus.success:
+            context
+                .flow<PaymentFlowData>()
+                .update((s) => s.copyWith(amountInSats: 0));
             break;
-          case AddressInputStatus.successWithInvoice:
-            context.flow<PaymentFlowData>().update((s) => s.copyWith(
-                invoice: state.invoice, addressOrInvoiceInput: state.input));
-            break;
-          case AddressInputStatus.failure:
+          case AmountInputStatus.failure:
             ScaffoldMessenger.of(context)
               ..hideCurrentSnackBar()
               ..clearSnackBars()
@@ -68,13 +64,13 @@ class _AddressInputViewState extends State<AddressInputView> {
             elevation: 0.0,
             automaticallyImplyLeading: true,
             title: const Text(
-              'ENTER ADDRESS',
+              'ENTER AMOUNT',
               style: TextStyle(fontSize: 18),
             ),
             leading: GestureDetector(
               onTap: () => context
                   .flow<PaymentFlowData>()
-                  .update((state) => state.copyWith(useQRCode: true)),
+                  .update((state) => const PaymentFlowData(useQRCode: false)),
               child: const Icon(Icons.arrow_back_ios),
             ),
             actions: <Widget>[
@@ -117,13 +113,13 @@ class _AddressInputViewState extends State<AddressInputView> {
               ),
               Expanded(
                 flex: 2,
-                child: BlocListener<AddressInputCubit, AddressInputState>(
+                child: BlocListener<AmountInputCubit, AmountInputState>(
                   listener: (context, state) {
-                    inputAddressController.text = state.input;
+                    inputAmountController.text = state.amount;
                   },
                   child: TextField(
-                    key: const Key('sendPayment_addressInput_textField'),
-                    controller: inputAddressController,
+                    key: const Key('sendPayment_amountInput_textField'),
+                    controller: inputAmountController,
                     minLines: 20,
                     maxLines: null,
                     style: const TextStyle(
@@ -154,8 +150,8 @@ class _AddressInputViewState extends State<AddressInputView> {
                           flex: 4,
                           child: Padding(
                             padding: const EdgeInsets.only(top: 15, bottom: 5),
-                            child: BlocBuilder<AddressInputCubit,
-                                AddressInputState>(
+                            child:
+                                BlocBuilder<AmountInputCubit, AmountInputState>(
                               builder: (context, state) {
                                 return ElevatedButton.icon(
                                   onPressed: () async {
@@ -163,7 +159,7 @@ class _AddressInputViewState extends State<AddressInputView> {
                                         Clipboard.kTextPlain);
                                     var copiedtext = cdata?.text;
                                     if (copiedtext != null) {
-                                      inputAddressController.text = copiedtext;
+                                      inputAmountController.text = copiedtext;
                                     }
                                   },
                                   icon: const Icon(
@@ -201,9 +197,9 @@ class _AddressInputViewState extends State<AddressInputView> {
                             textDirection: TextDirection.rtl,
                             child: ElevatedButton.icon(
                               onPressed: () {
-                                context
-                                    .read<AddressInputCubit>()
-                                    .validateAndSubmit();
+                                // context
+                                //     .read<AmountInputCubit>()
+                                //     .validateAndSubmit();
                               },
                               icon: const Icon(
                                 Icons.arrow_back,

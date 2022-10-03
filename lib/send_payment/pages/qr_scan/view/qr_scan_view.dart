@@ -1,10 +1,8 @@
 import 'package:flow_builder/flow_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:salamander_app/send_payment/models/payment_flow_data.dart';
-import 'package:salamander_app/send_payment/pages/qr_scan/cubit/qr_scan_cubit.dart';
-import 'package:salamander_app/send_payment/pages/qr_scan/cubit/qr_scan_state.dart';
-
+import 'package:salamander_app/send_payment/pages/qr_scan.dart';
+import 'package:salamander_app/send_payment/send_payment.dart';
 import 'qr_view_widget.dart';
 
 class QRScanView extends StatelessWidget {

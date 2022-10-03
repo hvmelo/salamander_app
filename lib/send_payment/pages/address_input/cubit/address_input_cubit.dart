@@ -1,10 +1,6 @@
 import 'package:bloc/bloc.dart';
-import 'package:bolt11_decoder/bolt11_decoder.dart';
-import 'package:coinslib/coinslib.dart';
 import 'package:equatable/equatable.dart';
-import 'package:salamander_app/util/btc_input_parser/bitcoin_address.dart';
-import 'package:salamander_app/util/btc_input_parser/btc_input_parser.dart';
-import 'package:salamander_app/util/btc_input_parser/lightning_invoice.dart';
+import 'package:salamander_app/util/btc_input_parser.dart';
 
 part 'address_input_state.dart';
 

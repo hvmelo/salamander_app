@@ -1,5 +1,4 @@
-import 'package:equatable/equatable.dart';
-import 'package:salamander_app/util/btc_input_parser.dart';
+part of 'qr_scan_cubit.dart';
 
 enum QRScanStatus { initial, failure, successWithAddress, successWithInvoice }
 

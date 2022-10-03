@@ -18,14 +18,14 @@ class AddressInputState extends Equatable {
   });
 
   const AddressInputState.initial() : this._(input: '');
-  const AddressInputState.successWithAddress(BitcoinAddress address)
+  AddressInputState.successWithAddress(BitcoinAddress address)
       : this._(
-            input: '',
+            input: address.address,
             address: address,
             status: AddressInputStatus.successWithAddress);
-  const AddressInputState.successWithInvoice(LightningInvoice invoice)
+  AddressInputState.successWithInvoice(LightningInvoice invoice)
       : this._(
-            input: '',
+            input: invoice.paymentRequest,
             invoice: invoice,
             status: AddressInputStatus.successWithInvoice);
   const AddressInputState.failure(String errorMessage)

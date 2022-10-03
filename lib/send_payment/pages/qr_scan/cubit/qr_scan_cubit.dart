@@ -1,7 +1,8 @@
 import 'package:bloc/bloc.dart';
+import 'package:equatable/equatable.dart';
 import 'package:salamander_app/util/btc_input_parser.dart';
 
-import 'qr_scan_state.dart';
+part 'qr_scan_state.dart';
 
 class QRScanCubit extends Cubit<QRScanState> {
   QRScanCubit() : super(const QRScanState.initial());
