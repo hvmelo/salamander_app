@@ -2,7 +2,7 @@ import 'package:flow_builder/flow_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:salamander_app/send_payment/pages/address_input.dart';
+import 'package:salamander_app/send_payment/pages/address_input/address_input.dart';
 import 'package:salamander_app/send_payment/send_payment.dart';
 
 class AddressInputView extends StatefulWidget {

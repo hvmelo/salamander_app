@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:salamander_app/send_payment/pages/address_input.dart';
+import 'package:salamander_app/send_payment/pages/address_input/address_input.dart';
 
 class AddressInputForm extends StatefulWidget {
   AddressInputForm({Key? key}) : super(key: key);

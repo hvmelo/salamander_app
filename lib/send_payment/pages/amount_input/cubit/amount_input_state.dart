@@ -9,19 +9,19 @@ class AmountInputState extends Equatable {
     this.errorMessage,
   });
 
-  const AmountInputState.initial() : this._(amount: '');
+  const AmountInputState.initial() : this._(amount: 0);
   const AmountInputState.failure(String errorMessage)
       : this._(
-            amount: '',
+            amount: 0,
             status: AmountInputStatus.failure,
             errorMessage: errorMessage);
 
   final AmountInputStatus status;
-  final String amount;
+  final num amount;
   final String? errorMessage;
 
   AmountInputState copyWith(
-      {AmountInputStatus? status, String? amount, String? errorMessage}) {
+      {AmountInputStatus? status, num? amount, String? errorMessage}) {
     return AmountInputState._(
         status: status ?? this.status,
         amount: amount ?? this.amount,
