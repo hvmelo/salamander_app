@@ -7,8 +7,7 @@ class AmountInputCubit extends Cubit<AmountInputState> {
   AmountInputCubit() : super(const AmountInputState.initial());
 
   void amountInputChanged(String amount) {
-    var amtStr = state.amount != 0 ? state.amount.toString() + amount : amount;
-    var amt = num.tryParse(amtStr);
+    var amt = num.tryParse(amount);
     if (amt != null) {
       emit(state.copyWith(status: AmountInputStatus.editing, amount: amt));
     }
