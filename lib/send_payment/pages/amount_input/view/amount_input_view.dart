@@ -1,3 +1,5 @@
+// ignore_for_file: lines_longer_than_80_chars
+
 import 'package:flow_builder/flow_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -38,9 +40,25 @@ class AmountInputView extends StatelessWidget {
             backgroundColor: Colors.transparent,
             elevation: 0.0,
             automaticallyImplyLeading: true,
-            title: const Text(
-              'ENTER AMOUNT',
-              style: TextStyle(fontSize: 18),
+            title: Column(
+              children: [
+                const Text('BALANCE',
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Colors.white,
+                    )),
+                BlocBuilder<AmountInputCubit, AmountInputState>(
+                  builder: (context, state) {
+                    return Text(
+                      '${state.status == AmountInputStatus.editing ? state.balance.toString() : '---'} sats',
+                      style: const TextStyle(
+                        fontSize: 14,
+                        color: Color.fromARGB(255, 142, 195, 238),
+                      ),
+                    );
+                  },
+                ),
+              ],
             ),
             leading: GestureDetector(
               onTap: () => context
