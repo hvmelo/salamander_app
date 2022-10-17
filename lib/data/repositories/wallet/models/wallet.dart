@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 import 'package:salamander_app/data/repositories/wallet/entities/wallet_entity.dart';
@@ -17,8 +16,8 @@ class Wallet extends Equatable {
   final String? id;
   final Map? balance;
   final String? activeAddress;
-  final Timestamp? lastUpdated;
-  final Timestamp? created;
+  final DateTime? lastUpdated;
+  final DateTime? created;
 
   /// Empty user which represents an unauthenticated user.
   static const empty = Wallet(ownerId: '');
@@ -27,8 +26,8 @@ class Wallet extends Equatable {
       {String? ownerId,
       Map? balance,
       String? activeAddress,
-      Timestamp? lastUpdated,
-      Timestamp? created,
+      DateTime? lastUpdated,
+      DateTime? created,
       String? id}) {
     return Wallet(
       ownerId: ownerId ?? this.ownerId,
@@ -56,16 +55,6 @@ class Wallet extends Equatable {
     ''';
   }
 
-  WalletEntity toEntity() {
-    return WalletEntity(
-        id ?? '',
-        ownerId,
-        balance ?? createNewBalance(),
-        activeAddress ?? '',
-        created ?? Timestamp.now(),
-        lastUpdated ?? Timestamp.now());
-  }
-
   Map<String, Object> createNewBalance() {
     return {
       'total_settled': 0,
@@ -85,8 +74,8 @@ class Wallet extends Equatable {
       ownerId: entity.ownerId,
       balance: entity.balance,
       activeAddress: entity.activeAddress,
-      lastUpdated: entity.lastUpdated,
-      created: entity.created,
+      lastUpdated: entity.lastUpdated.toDate(),
+      created: entity.created.toDate(),
       id: entity.id,
     );
   }
