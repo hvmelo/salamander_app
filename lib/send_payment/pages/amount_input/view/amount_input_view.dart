@@ -50,7 +50,7 @@ class AmountInputView extends StatelessWidget {
                 BlocBuilder<AmountInputCubit, AmountInputState>(
                   builder: (context, state) {
                     return Text(
-                      '${state.status == AmountInputStatus.editing ? state.balance.toString() : '---'} sats',
+                      '${state.balance != null ? state.balance.toString() : '---'} sats',
                       style: const TextStyle(
                         fontSize: 14,
                         color: Color.fromARGB(255, 142, 195, 238),
@@ -87,7 +87,7 @@ class AmountInputView extends StatelessWidget {
                         textAlign: TextAlign.center,
                         style: const TextStyle(
                           color: Colors.white,
-                          fontSize: 40,
+                          fontSize: 50,
                           fontWeight: FontWeight.bold,
                         ),
                       );
@@ -98,10 +98,183 @@ class AmountInputView extends StatelessWidget {
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 16,
+                      fontSize: 14,
                     ),
                   ),
-                  Expanded(child: Container()),
+                  const SizedBox(height: 30),
+                  SizedBox(
+                    height: 30,
+                    child: Row(
+                      children: [
+                        Expanded(child: Container()),
+                        Expanded(
+                          flex: 5,
+                          child:
+                              BlocBuilder<AmountInputCubit, AmountInputState>(
+                            builder: (context, state) {
+                              return Slider(
+                                value: state.selectedPriority.value,
+                                min: 0,
+                                max: 2,
+                                divisions: 2,
+                                label: state.selectedPriority.name,
+                                onChanged: (double value) {
+                                  context
+                                      .read<AmountInputCubit>()
+                                      .selectedPriorityChanged(value);
+                                },
+                              );
+                            },
+                          ),
+                        ),
+                        Expanded(child: Container()),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: 60,
+                    child: Row(
+                      children: [
+                        Expanded(child: Container()),
+                        Expanded(
+                          flex: 5,
+                          child:
+                              BlocBuilder<AmountInputCubit, AmountInputState>(
+                            builder: (context, state) {
+                              return Row(
+                                children: [
+                                  Expanded(
+                                    child: Visibility(
+                                      visible: state.selectedPriority ==
+                                          FeePriority.low,
+                                      child: Container(
+                                        alignment: Alignment.topLeft,
+                                        child: Column(
+                                          children: [
+                                            const Text(
+                                              'Low\nPriority',
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 12,
+                                              ),
+                                            ),
+                                            const Text(
+                                              '~ 60 min',
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 12,
+                                                  fontStyle: FontStyle.italic),
+                                            ),
+                                            const Text(
+                                              '200 sats',
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                color: Color.fromARGB(
+                                                    255, 243, 248, 187),
+                                                fontSize: 12,
+                                                fontStyle: FontStyle.italic,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Visibility(
+                                      visible: state.selectedPriority ==
+                                          FeePriority.medium,
+                                      child: Container(
+                                        alignment: Alignment.topCenter,
+                                        child: Column(
+                                          children: [
+                                            const Text(
+                                              'Standard\nPriority',
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 12,
+                                              ),
+                                            ),
+                                            const Text(
+                                              '~ 30 min',
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 12,
+                                                  fontStyle: FontStyle.italic),
+                                            ),
+                                            const Text(
+                                              '400 sats',
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                color: Color.fromARGB(
+                                                    255, 243, 248, 187),
+                                                fontSize: 12,
+                                                fontStyle: FontStyle.italic,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Visibility(
+                                      visible: state.selectedPriority ==
+                                          FeePriority.high,
+                                      child: Container(
+                                        alignment: Alignment.topRight,
+                                        child: Column(
+                                          children: [
+                                            const Text(
+                                              'High\nPriority',
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 12,
+                                              ),
+                                            ),
+                                            const Text(
+                                              '~ 10 min',
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 12,
+                                                  fontStyle: FontStyle.italic),
+                                            ),
+                                            const Text(
+                                              '600 sats',
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                color: Color.fromARGB(
+                                                    255, 243, 248, 187),
+                                                fontSize: 12,
+                                                fontStyle: FontStyle.italic,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              );
+                            },
+                          ),
+                        ),
+                        Expanded(child: Container()),
+                      ],
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -148,23 +321,30 @@ class AmountInputView extends StatelessWidget {
                         flex: 4,
                         child: Directionality(
                           textDirection: TextDirection.rtl,
-                          child: ElevatedButton.icon(
-                            onPressed: () {
-                              // context
-                              //     .read<AmountInputCubit>()
-                              //     .validateAndSubmit();
+                          child:
+                              BlocBuilder<AmountInputCubit, AmountInputState>(
+                            builder: (context, state) {
+                              return ElevatedButton.icon(
+                                onPressed: state.status !=
+                                        AmountInputStatus.editingReady
+                                    ? null
+                                    : () {},
+                                icon: const Icon(
+                                  Icons.arrow_back,
+                                  size: 20,
+                                ),
+                                label: const Text(
+                                  'Next',
+                                  style: TextStyle(fontSize: 14),
+                                ),
+                                style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.blueGrey[900],
+                                    disabledBackgroundColor:
+                                        Colors.blueGrey[900],
+                                    disabledForegroundColor:
+                                        Colors.blueGrey[700]),
+                              );
                             },
-                            icon: const Icon(
-                              Icons.arrow_back,
-                              size: 20,
-                            ),
-                            label: const Text(
-                              'Next',
-                              style: TextStyle(fontSize: 14),
-                            ),
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.blueGrey[900],
-                            ),
                           ),
                         ),
                       ),

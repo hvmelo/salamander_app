@@ -10,10 +10,10 @@ class OnChainTxFees extends Equatable {
       required this.currentServiceFee,
       required this.lastUpdated});
 
-  final Map<String, num> totalTxFeeByPriority;
-  final Map<String, num> txFeeByPriority;
-  final num currentMargin;
-  final num currentServiceFee;
+  final Map<String, int> totalTxFeeByPriority;
+  final Map<String, int> txFeeByPriority;
+  final int currentMargin;
+  final int currentServiceFee;
   final Timestamp lastUpdated;
 
   @override
@@ -39,10 +39,10 @@ class OnChainTxFees extends Equatable {
 
   static OnChainTxFees fromEntity(OnChainTxFeesEntity entity) {
     return OnChainTxFees(
-      totalTxFeeByPriority: entity.totalTxFeeByPriority as Map<String, num>,
-      txFeeByPriority: entity.txFeeByPriority as Map<String, num>,
-      currentMargin: entity.currentMargin,
-      currentServiceFee: entity.currentServiceFee,
+      totalTxFeeByPriority: entity.totalTxFeeByPriority.cast<String, int>(),
+      txFeeByPriority: entity.txFeeByPriority.cast<String, int>(),
+      currentMargin: entity.currentMargin as int,
+      currentServiceFee: entity.currentServiceFee as int,
       lastUpdated: entity.lastUpdated,
     );
   }
