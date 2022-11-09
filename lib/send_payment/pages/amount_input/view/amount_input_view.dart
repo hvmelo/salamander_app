@@ -168,10 +168,10 @@ class AmountInputView extends StatelessWidget {
                                                   fontSize: 12,
                                                   fontStyle: FontStyle.italic),
                                             ),
-                                            const Text(
-                                              '200 sats',
+                                            Text(
+                                              '${state.feeByPriority != null ? state.feeByPriority![FeePriority.low] : '---'} sats',
                                               textAlign: TextAlign.center,
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                 color: Color.fromARGB(
                                                     255, 243, 248, 187),
                                                 fontSize: 12,
@@ -209,10 +209,10 @@ class AmountInputView extends StatelessWidget {
                                                   fontSize: 12,
                                                   fontStyle: FontStyle.italic),
                                             ),
-                                            const Text(
-                                              '400 sats',
+                                            Text(
+                                              '${state.feeByPriority != null ? state.feeByPriority![FeePriority.medium] : '---'} sats',
                                               textAlign: TextAlign.center,
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                 color: Color.fromARGB(
                                                     255, 243, 248, 187),
                                                 fontSize: 12,
@@ -250,10 +250,10 @@ class AmountInputView extends StatelessWidget {
                                                   fontSize: 12,
                                                   fontStyle: FontStyle.italic),
                                             ),
-                                            const Text(
-                                              '600 sats',
+                                            Text(
+                                              '${state.feeByPriority != null ? state.feeByPriority![FeePriority.high] : '---'} sats',
                                               textAlign: TextAlign.center,
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                 color: Color.fromARGB(
                                                     255, 243, 248, 187),
                                                 fontSize: 12,
