@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:salamander_app/data/repositories/transaction_fees/transaction_fees_repository.dart';
+import 'package:salamander_app/data/repositories/transaction_fees_repository.dart';
 import 'package:salamander_app/data/repositories/wallet_repository.dart';
 
 part 'amount_input_state.dart';
@@ -36,19 +37,9 @@ class AmountInputCubit extends Cubit<AmountInputState> {
     });
 
     _feesSubscription = _feesRepository.onChainTxFees?.listen((fees) {
-      var feeByPriority = fees.totalTxFeeByPriority.map<FeePriority, int>(
-        (key, value) {
-          var priority = key == 'high'
-              ? FeePriority.high
-              : (key == 'medium' ? FeePriority.medium : FeePriority.low);
-
-          return MapEntry(priority, value);
-        },
-      );
-
       emit(state.copyWith(
-          status: checkStatus(newFeeByPriority: feeByPriority),
-          feeByPriority: feeByPriority));
+          status: checkStatus(newFeeByPriority: fees.totalTxFeeByPriority),
+          feeByPriority: fees.totalTxFeeByPriority));
     });
   }
 
@@ -59,8 +50,7 @@ class AmountInputCubit extends Cubit<AmountInputState> {
     }
   }
 
-  void selectedPriorityChanged(double value) {
-    var feePriority = FeePriority.fromValue(value);
+  void selectedPriorityChanged(FeePriority feePriority) {
     emit(state.copyWith(
         status: checkStatus(newSelectedPriority: feePriority),
         selectedPriority: feePriority));
@@ -84,6 +74,10 @@ class AmountInputCubit extends Cubit<AmountInputState> {
       }
     }
     return AmountInputStatus.editingNotReady;
+  }
+
+  void validateAndSubmit() {
+    emit(state.copyWith(status: AmountInputStatus.success));
   }
 
   @override

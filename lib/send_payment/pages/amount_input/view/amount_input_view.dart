@@ -3,8 +3,10 @@
 import 'package:flow_builder/flow_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:numeric_keyboard/numeric_keyboard.dart';
 import 'package:salamander_app/send_payment/pages/amount_input/amount_input.dart';
+import 'package:salamander_app/send_payment/pages/amount_input/view/widgets/fee_priority_labels.dart';
+import 'package:salamander_app/send_payment/pages/amount_input/view/widgets/fee_priority_picker.dart';
+import 'package:salamander_app/send_payment/pages/amount_input/view/widgets/numeric_keyboard.dart';
 import 'package:salamander_app/send_payment/send_payment.dart';
 
 class AmountInputView extends StatelessWidget {
@@ -16,9 +18,9 @@ class AmountInputView extends StatelessWidget {
       listener: (context, state) {
         switch (state.status) {
           case AmountInputStatus.success:
-            context
-                .flow<PaymentFlowData>()
-                .update((s) => s.copyWith(amountInSats: 0));
+            context.flow<PaymentFlowData>().update((s) => s.copyWith(
+                amountInSats: state.amount,
+                selectedFeePriority: state.selectedPriority));
             break;
           case AmountInputStatus.failure:
             ScaffoldMessenger.of(context)
@@ -107,25 +109,9 @@ class AmountInputView extends StatelessWidget {
                     child: Row(
                       children: [
                         Expanded(child: Container()),
-                        Expanded(
+                        const Expanded(
                           flex: 5,
-                          child:
-                              BlocBuilder<AmountInputCubit, AmountInputState>(
-                            builder: (context, state) {
-                              return Slider(
-                                value: state.selectedPriority.value,
-                                min: 0,
-                                max: 2,
-                                divisions: 2,
-                                label: state.selectedPriority.name,
-                                onChanged: (double value) {
-                                  context
-                                      .read<AmountInputCubit>()
-                                      .selectedPriorityChanged(value);
-                                },
-                              );
-                            },
-                          ),
+                          child: FeePriorityPicker(),
                         ),
                         Expanded(child: Container()),
                       ],
@@ -136,140 +122,9 @@ class AmountInputView extends StatelessWidget {
                     child: Row(
                       children: [
                         Expanded(child: Container()),
-                        Expanded(
+                        const Expanded(
                           flex: 5,
-                          child:
-                              BlocBuilder<AmountInputCubit, AmountInputState>(
-                            builder: (context, state) {
-                              return Row(
-                                children: [
-                                  Expanded(
-                                    child: Visibility(
-                                      visible: state.selectedPriority ==
-                                          FeePriority.low,
-                                      child: Container(
-                                        alignment: Alignment.topLeft,
-                                        child: Column(
-                                          children: [
-                                            const Text(
-                                              'Low\nPriority',
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 12,
-                                              ),
-                                            ),
-                                            const Text(
-                                              '~ 60 min',
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 12,
-                                                  fontStyle: FontStyle.italic),
-                                            ),
-                                            Text(
-                                              '${state.feeByPriority != null ? state.feeByPriority![FeePriority.low] : '---'} sats',
-                                              textAlign: TextAlign.center,
-                                              style: const TextStyle(
-                                                color: Color.fromARGB(
-                                                    255, 243, 248, 187),
-                                                fontSize: 12,
-                                                fontStyle: FontStyle.italic,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Visibility(
-                                      visible: state.selectedPriority ==
-                                          FeePriority.medium,
-                                      child: Container(
-                                        alignment: Alignment.topCenter,
-                                        child: Column(
-                                          children: [
-                                            const Text(
-                                              'Standard\nPriority',
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 12,
-                                              ),
-                                            ),
-                                            const Text(
-                                              '~ 30 min',
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 12,
-                                                  fontStyle: FontStyle.italic),
-                                            ),
-                                            Text(
-                                              '${state.feeByPriority != null ? state.feeByPriority![FeePriority.medium] : '---'} sats',
-                                              textAlign: TextAlign.center,
-                                              style: const TextStyle(
-                                                color: Color.fromARGB(
-                                                    255, 243, 248, 187),
-                                                fontSize: 12,
-                                                fontStyle: FontStyle.italic,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Visibility(
-                                      visible: state.selectedPriority ==
-                                          FeePriority.high,
-                                      child: Container(
-                                        alignment: Alignment.topRight,
-                                        child: Column(
-                                          children: [
-                                            const Text(
-                                              'High\nPriority',
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 12,
-                                              ),
-                                            ),
-                                            const Text(
-                                              '~ 10 min',
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 12,
-                                                  fontStyle: FontStyle.italic),
-                                            ),
-                                            Text(
-                                              '${state.feeByPriority != null ? state.feeByPriority![FeePriority.high] : '---'} sats',
-                                              textAlign: TextAlign.center,
-                                              style: const TextStyle(
-                                                color: Color.fromARGB(
-                                                    255, 243, 248, 187),
-                                                fontSize: 12,
-                                                fontStyle: FontStyle.italic,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              );
-                            },
-                          ),
+                          child: FeePriorityLabels(),
                         ),
                         Expanded(child: Container()),
                       ],
@@ -280,35 +135,7 @@ class AmountInputView extends StatelessWidget {
             ),
             Column(
               children: [
-                BlocBuilder<AmountInputCubit, AmountInputState>(
-                  builder: (context, state) {
-                    return NumericKeyboard(
-                      onKeyboardTap: (value) {
-                        var current = state.amount;
-                        context.read<AmountInputCubit>().amountInputChanged(
-                            current != 0 ? current.toString() + value : value);
-                      },
-                      textColor: const Color.fromARGB(255, 89, 172, 241),
-                      rightButtonFn: () {
-                        var current = state.amount;
-                        if (current != 0) {
-                          var currentStr = current.toString();
-                          if (currentStr.length > 1) {}
-                          context.read<AmountInputCubit>().amountInputChanged(
-                              currentStr.length > 1
-                                  ? currentStr.substring(
-                                      0, currentStr.length - 1)
-                                  : '0');
-                        }
-                      },
-                      rightIcon: const Icon(
-                        Icons.backspace,
-                        color: Color.fromARGB(255, 89, 172, 241),
-                      ),
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    );
-                  },
-                ),
+                const AmountInputNumericKeyboard(),
                 Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: Row(

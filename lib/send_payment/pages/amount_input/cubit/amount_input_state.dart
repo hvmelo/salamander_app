@@ -5,21 +5,7 @@ enum AmountInputStatus {
   editingNotReady,
   editingReady,
   failure,
-  success
-}
-
-enum FeePriority {
-  low('Low', 0),
-  medium('Standard', 1),
-  high('High', 2);
-
-  const FeePriority(this.name, this.value);
-  factory FeePriority.fromValue(double value) {
-    return values.firstWhere((e) => e.value == value, orElse: () => low);
-  }
-
-  final String name;
-  final double value;
+  success,
 }
 
 class AmountInputState extends Equatable {
@@ -27,7 +13,7 @@ class AmountInputState extends Equatable {
     required this.amount,
     this.balance,
     this.feeByPriority,
-    this.selectedPriority = FeePriority.low,
+    this.selectedPriority = FeePriority.standard,
     this.status = AmountInputStatus.initial,
     this.errorMessage,
   });

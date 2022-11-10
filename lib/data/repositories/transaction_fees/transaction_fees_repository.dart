@@ -5,13 +5,6 @@ import 'package:salamander_app/data/repositories/transaction_fees_repository.dar
 class TransactionFeesRepository {
   TransactionFeesRepository();
 
-  // final CollectionReference _feesCollectionRef = FirebaseFirestore.instance
-  //     .collection('fees')
-  //     .withConverter<WalletEntity>(
-  //       fromFirestore: (snapshot, _) => WalletEntity.fromSnapshot(snapshot),
-  //       toFirestore: (wallet, _) => wallet.toJson(),
-  //     );
-
   final CollectionReference _feesCollectionRef =
       FirebaseFirestore.instance.collection(constants.FEES_COLLECTION_NAME);
 

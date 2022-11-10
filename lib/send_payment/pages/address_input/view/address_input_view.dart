@@ -175,7 +175,7 @@ class _AddressInputViewState extends State<AddressInputView> {
                                     style: TextStyle(fontSize: 14),
                                   ),
                                   style: ElevatedButton.styleFrom(
-                                    primary:
+                                    backgroundColor:
                                         const Color.fromARGB(255, 4, 96, 171),
                                   ),
                                 );
@@ -214,7 +214,7 @@ class _AddressInputViewState extends State<AddressInputView> {
                                 style: TextStyle(fontSize: 14),
                               ),
                               style: ElevatedButton.styleFrom(
-                                primary: Colors.blueGrey[900],
+                                backgroundColor: Colors.blueGrey[900],
                               ),
                             ),
                           ),
