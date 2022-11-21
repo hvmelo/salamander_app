@@ -111,7 +111,7 @@ class OnChainPaymentConfirmationView extends StatelessWidget {
                             ),
                             const SizedBox(height: 20),
                             const Text(
-                              'Amount:',
+                              'The recipient will receive:',
                               textAlign: TextAlign.left,
                               style: TextStyle(
                                 color: Colors.white,
@@ -130,7 +130,7 @@ class OnChainPaymentConfirmationView extends StatelessWidget {
                             ),
                             const SizedBox(height: 20),
                             const Text(
-                              'Fees:',
+                              'Fees you pay:',
                               textAlign: TextAlign.left,
                               style: TextStyle(
                                 color: Colors.white,
