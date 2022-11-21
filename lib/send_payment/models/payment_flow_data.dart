@@ -9,6 +9,8 @@ class PaymentFlowData extends Equatable {
       this.invoice,
       this.amountInSats,
       this.selectedFeePriority,
+      this.contractedTxFee,
+      this.contractedTotalFee,
       this.useQRCode = true});
 
   final String? addressOrInvoiceInput;
@@ -16,6 +18,8 @@ class PaymentFlowData extends Equatable {
   final LightningInvoice? invoice;
   final int? amountInSats;
   final FeePriority? selectedFeePriority;
+  final int? contractedTxFee;
+  final int? contractedTotalFee;
   final bool useQRCode;
 
   @override
@@ -25,6 +29,8 @@ class PaymentFlowData extends Equatable {
         invoice,
         amountInSats,
         selectedFeePriority,
+        contractedTxFee,
+        contractedTotalFee,
         useQRCode
       ];
 
@@ -34,6 +40,8 @@ class PaymentFlowData extends Equatable {
     LightningInvoice? invoice,
     int? amountInSats,
     FeePriority? selectedFeePriority,
+    int? contractedTxFee,
+    int? contractedTotalFee,
     bool? useQRCode,
   }) {
     return PaymentFlowData(
@@ -43,6 +51,8 @@ class PaymentFlowData extends Equatable {
       invoice: invoice ?? this.invoice,
       amountInSats: amountInSats ?? this.amountInSats,
       selectedFeePriority: selectedFeePriority ?? this.selectedFeePriority,
+      contractedTxFee: contractedTxFee ?? this.contractedTxFee,
+      contractedTotalFee: contractedTotalFee ?? this.contractedTotalFee,
       useQRCode: useQRCode ?? this.useQRCode,
     );
   }

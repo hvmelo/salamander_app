@@ -38,8 +38,9 @@ class AmountInputCubit extends Cubit<AmountInputState> {
 
     _feesSubscription = _feesRepository.onChainTxFees?.listen((fees) {
       emit(state.copyWith(
-          status: checkStatus(newFeeByPriority: fees.totalTxFeeByPriority),
-          feeByPriority: fees.totalTxFeeByPriority));
+          status: checkStatus(newTotalFeeByPriority: fees.totalTxFeeByPriority),
+          txFeeByPriority: fees.txFeeByPriority,
+          totalFeeByPriority: fees.totalTxFeeByPriority));
     });
   }
 
@@ -59,16 +60,16 @@ class AmountInputCubit extends Cubit<AmountInputState> {
   AmountInputStatus checkStatus({
     int? newAmount,
     int? newBalance,
-    Map<FeePriority, int>? newFeeByPriority,
+    Map<FeePriority, int>? newTotalFeeByPriority,
     FeePriority? newSelectedPriority,
   }) {
     var amount = newAmount ?? state.amount;
     var balance = newBalance ?? state.balance;
-    var feeByPriority = newFeeByPriority ?? state.feeByPriority;
+    var totalFeeByPriority = newTotalFeeByPriority ?? state.totalFeeByPriority;
     var selectedPriority = newSelectedPriority ?? state.selectedPriority;
 
-    if (amount > 0 && balance != null && feeByPriority != null) {
-      var fee = feeByPriority[selectedPriority];
+    if (amount > 0 && balance != null && totalFeeByPriority != null) {
+      var fee = totalFeeByPriority[selectedPriority];
       if (fee != null && balance >= amount + fee) {
         return AmountInputStatus.editingReady;
       }

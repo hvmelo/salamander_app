@@ -39,7 +39,7 @@ class FeePriorityLabels extends StatelessWidget {
                             fontStyle: FontStyle.italic),
                       ),
                       Text(
-                        '${state.feeByPriority != null ? state.feeByPriority![FeePriority.low] : '---'} sats',
+                        '${state.totalFeeByPriority != null ? state.totalFeeByPriority![FeePriority.low] : '---'} sats',
                         textAlign: TextAlign.center,
                         style: const TextStyle(
                           color: Color.fromARGB(255, 243, 248, 187),
@@ -78,7 +78,7 @@ class FeePriorityLabels extends StatelessWidget {
                             fontStyle: FontStyle.italic),
                       ),
                       Text(
-                        '${state.feeByPriority != null ? state.feeByPriority![FeePriority.standard] : '---'} sats',
+                        '${state.totalFeeByPriority != null ? state.totalFeeByPriority![FeePriority.standard] : '---'} sats',
                         textAlign: TextAlign.center,
                         style: const TextStyle(
                           color: Color.fromARGB(255, 243, 248, 187),
@@ -117,7 +117,7 @@ class FeePriorityLabels extends StatelessWidget {
                             fontStyle: FontStyle.italic),
                       ),
                       Text(
-                        '${state.feeByPriority != null ? state.feeByPriority![FeePriority.high] : '---'} sats',
+                        '${state.totalFeeByPriority != null ? state.totalFeeByPriority![FeePriority.high] : '---'} sats',
                         textAlign: TextAlign.center,
                         style: const TextStyle(
                           color: Color.fromARGB(255, 243, 248, 187),

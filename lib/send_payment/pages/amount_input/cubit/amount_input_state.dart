@@ -5,14 +5,15 @@ enum AmountInputStatus {
   editingNotReady,
   editingReady,
   failure,
-  success,
+  success
 }
 
 class AmountInputState extends Equatable {
   const AmountInputState._({
     required this.amount,
     this.balance,
-    this.feeByPriority,
+    this.totalFeeByPriority,
+    this.txFeeByPriority,
     this.selectedPriority = FeePriority.standard,
     this.status = AmountInputStatus.initial,
     this.errorMessage,
@@ -23,7 +24,8 @@ class AmountInputState extends Equatable {
   final AmountInputStatus status;
   final int amount;
   final int? balance;
-  final Map<FeePriority, int>? feeByPriority;
+  final Map<FeePriority, int>? txFeeByPriority;
+  final Map<FeePriority, int>? totalFeeByPriority;
   final FeePriority selectedPriority;
   final String? errorMessage;
 
@@ -31,19 +33,28 @@ class AmountInputState extends Equatable {
       {AmountInputStatus? status,
       int? amount,
       int? balance,
-      Map<FeePriority, int>? feeByPriority,
+      Map<FeePriority, int>? txFeeByPriority,
+      Map<FeePriority, int>? totalFeeByPriority,
       FeePriority? selectedPriority,
       String? errorMessage}) {
     return AmountInputState._(
         status: status ?? this.status,
         amount: amount ?? this.amount,
         balance: balance ?? this.balance,
-        feeByPriority: feeByPriority ?? this.feeByPriority,
+        txFeeByPriority: txFeeByPriority ?? this.txFeeByPriority,
+        totalFeeByPriority: totalFeeByPriority ?? this.totalFeeByPriority,
         selectedPriority: selectedPriority ?? this.selectedPriority,
         errorMessage: errorMessage ?? this.errorMessage);
   }
 
   @override
-  List<Object?> get props =>
-      [status, amount, balance, feeByPriority, selectedPriority, errorMessage];
+  List<Object?> get props => [
+        status,
+        amount,
+        balance,
+        txFeeByPriority,
+        totalFeeByPriority,
+        selectedPriority,
+        errorMessage
+      ];
 }

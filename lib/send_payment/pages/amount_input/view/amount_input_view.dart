@@ -17,11 +17,6 @@ class AmountInputView extends StatelessWidget {
     return BlocListener<AmountInputCubit, AmountInputState>(
       listener: (context, state) {
         switch (state.status) {
-          case AmountInputStatus.success:
-            context.flow<PaymentFlowData>().update((s) => s.copyWith(
-                amountInSats: state.amount,
-                selectedFeePriority: state.selectedPriority));
-            break;
           case AmountInputStatus.failure:
             ScaffoldMessenger.of(context)
               ..hideCurrentSnackBar()
@@ -155,7 +150,21 @@ class AmountInputView extends StatelessWidget {
                                 onPressed: state.status !=
                                         AmountInputStatus.editingReady
                                     ? null
-                                    : () {},
+                                    : () {
+                                        context
+                                            .flow<PaymentFlowData>()
+                                            .update((s) => s.copyWith(
+                                                  amountInSats: state.amount,
+                                                  selectedFeePriority:
+                                                      state.selectedPriority,
+                                                  contractedTotalFee: state
+                                                          .totalFeeByPriority![
+                                                      state.selectedPriority],
+                                                  contractedTxFee: state
+                                                          .txFeeByPriority![
+                                                      state.selectedPriority],
+                                                ));
+                                      },
                                 icon: const Icon(
                                   Icons.arrow_back,
                                   size: 20,
