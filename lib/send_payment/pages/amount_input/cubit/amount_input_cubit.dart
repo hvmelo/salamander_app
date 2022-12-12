@@ -77,10 +77,6 @@ class AmountInputCubit extends Cubit<AmountInputState> {
     return AmountInputStatus.editingNotReady;
   }
 
-  void validateAndSubmit() {
-    emit(state.copyWith(status: AmountInputStatus.success));
-  }
-
   @override
   Future<void> close() {
     _walletSubscription?.cancel();

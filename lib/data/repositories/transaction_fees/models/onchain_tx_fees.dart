@@ -3,17 +3,18 @@ import 'package:equatable/equatable.dart';
 import 'package:salamander_app/data/repositories/transaction_fees/entities/on_chain_tx_fees_entity.dart';
 
 enum FeePriority {
-  low('Low', 0),
-  standard('Standard', 1),
-  high('High', 2);
+  low('Low', 0, 10),
+  standard('Standard', 1, 30),
+  high('High', 2, 60);
 
-  const FeePriority(this.name, this.value);
+  const FeePriority(this.name, this.value, this.confirmationTime);
   factory FeePriority.fromValue(double value) {
     return values.firstWhere((e) => e.value == value, orElse: () => low);
   }
 
   final String name;
   final double value;
+  final int confirmationTime;
 }
 
 class OnChainTxFees extends Equatable {

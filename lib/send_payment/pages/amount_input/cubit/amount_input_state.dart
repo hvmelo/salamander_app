@@ -5,7 +5,6 @@ enum AmountInputStatus {
   editingNotReady,
   editingReady,
   failure,
-  success
 }
 
 class AmountInputState extends Equatable {

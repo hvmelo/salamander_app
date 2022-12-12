@@ -34,43 +34,44 @@ class AmountInputView extends StatelessWidget {
         backgroundColor: Colors.black,
         extendBodyBehindAppBar: false,
         appBar: AppBar(
-            backgroundColor: Colors.transparent,
-            elevation: 0.0,
-            automaticallyImplyLeading: true,
-            title: Column(
-              children: [
-                const Text('BALANCE',
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: Colors.white,
-                    )),
-                BlocBuilder<AmountInputCubit, AmountInputState>(
-                  builder: (context, state) {
-                    return Text(
-                      '${state.balance != null ? state.balance.toString() : '---'} sats',
-                      style: const TextStyle(
-                        fontSize: 14,
-                        color: Color.fromARGB(255, 142, 195, 238),
-                      ),
-                    );
-                  },
-                ),
-              ],
-            ),
-            leading: GestureDetector(
-              onTap: () => context
-                  .flow<PaymentFlowData>()
-                  .update((state) => const PaymentFlowData(useQRCode: false)),
-              child: const Icon(Icons.arrow_back_ios),
-            ),
-            actions: <Widget>[
-              Padding(
-                  padding: const EdgeInsets.only(right: 10.0),
-                  child: GestureDetector(
-                    onTap: () => context.flow<PaymentFlowData>().complete(),
-                    child: const Icon(Icons.close),
+          backgroundColor: Colors.transparent,
+          elevation: 0.0,
+          automaticallyImplyLeading: true,
+          title: Column(
+            children: [
+              const Text('BALANCE',
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Colors.white,
                   )),
-            ]),
+              BlocBuilder<AmountInputCubit, AmountInputState>(
+                builder: (context, state) {
+                  return Text(
+                    '${state.balance != null ? state.balance.toString() : '---'} sats',
+                    style: const TextStyle(
+                      fontSize: 14,
+                      color: Color.fromARGB(255, 142, 195, 238),
+                    ),
+                  );
+                },
+              ),
+            ],
+          ),
+          leading: GestureDetector(
+            onTap: () => context
+                .flow<PaymentFlowData>()
+                .update((state) => const PaymentFlowData(useQRCode: false)),
+            child: const Icon(Icons.arrow_back_ios),
+          ),
+          actions: <Widget>[
+            Padding(
+                padding: const EdgeInsets.only(right: 10.0),
+                child: GestureDetector(
+                  onTap: () => context.flow<PaymentFlowData>().complete(),
+                  child: const Icon(Icons.close),
+                )),
+          ],
+        ),
         body: Column(
           children: [
             Expanded(
@@ -98,7 +99,7 @@ class AmountInputView extends StatelessWidget {
                       fontSize: 14,
                     ),
                   ),
-                  const SizedBox(height: 30),
+                  Expanded(child: Container()),
                   SizedBox(
                     height: 30,
                     child: Row(
@@ -125,6 +126,7 @@ class AmountInputView extends StatelessWidget {
                       ],
                     ),
                   ),
+                  Expanded(child: Container()),
                 ],
               ),
             ),

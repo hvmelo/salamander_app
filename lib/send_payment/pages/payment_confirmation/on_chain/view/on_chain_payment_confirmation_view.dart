@@ -1,3 +1,5 @@
+// ignore_for_file: lines_longer_than_80_chars
+
 import 'package:flow_builder/flow_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -23,6 +25,20 @@ class OnChainPaymentConfirmationView extends StatelessWidget {
             //           state.txFeeByPriority![state.selectedPriority],
             //     ));
             break;
+          case OnChainPaymentConfirmationStatus.valueChanged:
+            ScaffoldMessenger.of(context)
+              ..hideCurrentSnackBar()
+              ..clearSnackBars()
+              ..showSnackBar(
+                SnackBar(
+                  content: Text(state.errorMessage ?? 'Unknown error'),
+                ),
+              );
+            context.flow<PaymentFlowData>().update(
+                  (state) =>
+                      PaymentFlowData(useQRCode: false, address: state.address),
+                );
+            break;
           case OnChainPaymentConfirmationStatus.paymentFailure:
             ScaffoldMessenger.of(context)
               ..hideCurrentSnackBar()
@@ -43,9 +59,26 @@ class OnChainPaymentConfirmationView extends StatelessWidget {
             backgroundColor: Colors.transparent,
             elevation: 0.0,
             automaticallyImplyLeading: true,
-            title: const Text(
-              '',
-              style: TextStyle(fontSize: 18),
+            title: Column(
+              children: [
+                const Text('BALANCE',
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Colors.white,
+                    )),
+                BlocBuilder<OnChainPaymentConfirmationCubit,
+                    OnChainPaymentConfirmationState>(
+                  builder: (context, state) {
+                    return Text(
+                      '${state.currentBalance != null ? state.currentBalance.toString() : '---'} sats',
+                      style: const TextStyle(
+                        fontSize: 14,
+                        color: Color.fromARGB(255, 142, 195, 238),
+                      ),
+                    );
+                  },
+                ),
+              ],
             ),
             leading: GestureDetector(
               onTap: () => context.flow<PaymentFlowData>().update(
@@ -67,28 +100,27 @@ class OnChainPaymentConfirmationView extends StatelessWidget {
           child: Column(
             children: [
               Expanded(
-                child: Column(
-                  children: [
-                    Expanded(
-                      flex: 1,
-                      child: Container(
-                        alignment: Alignment.center,
-                        child: const Text(
-                          'Please review your payment details:',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 26,
+                child: BlocBuilder<OnChainPaymentConfirmationCubit,
+                    OnChainPaymentConfirmationState>(
+                  builder: (context, state) {
+                    return Column(
+                      children: [
+                        Expanded(
+                          flex: 1,
+                          child: Container(
+                            alignment: Alignment.center,
+                            child: const Text(
+                              'Please review your payment details',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 26,
+                              ),
+                            ),
                           ),
                         ),
-                      ),
-                    ),
-                    Expanded(
-                      flex: 2,
-                      child: Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
-                        child: Column(
+                        Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             const Text(
@@ -100,11 +132,11 @@ class OnChainPaymentConfirmationView extends StatelessWidget {
                                 fontSize: 14,
                               ),
                             ),
-                            const Text(
-                              '2NAJuB4URbZe7oxXDm7HLG58yHZTT98bgxS',
+                            Text(
+                              '${state.address.address}',
                               textAlign: TextAlign.left,
-                              style: TextStyle(
-                                color: Colors.white,
+                              style: const TextStyle(
+                                color: Color.fromARGB(255, 142, 195, 238),
                                 fontWeight: FontWeight.bold,
                                 fontSize: 16,
                               ),
@@ -119,18 +151,18 @@ class OnChainPaymentConfirmationView extends StatelessWidget {
                                 fontSize: 14,
                               ),
                             ),
-                            const Text(
-                              '200 sats',
+                            Text(
+                              '${state.amountInSats} sats',
                               textAlign: TextAlign.left,
-                              style: TextStyle(
-                                color: Colors.white,
+                              style: const TextStyle(
+                                color: Color.fromARGB(255, 142, 195, 238),
                                 fontWeight: FontWeight.bold,
                                 fontSize: 14,
                               ),
                             ),
                             const SizedBox(height: 20),
                             const Text(
-                              'Fees you pay:',
+                              'Fees applied:',
                               textAlign: TextAlign.left,
                               style: TextStyle(
                                 color: Colors.white,
@@ -138,18 +170,18 @@ class OnChainPaymentConfirmationView extends StatelessWidget {
                                 fontSize: 14,
                               ),
                             ),
-                            const Text(
-                              '400 sats',
+                            Text(
+                              '${state.contractedTotalFee} sats',
                               textAlign: TextAlign.left,
-                              style: TextStyle(
-                                color: Colors.white,
+                              style: const TextStyle(
+                                color: Color.fromARGB(255, 142, 195, 238),
                                 fontWeight: FontWeight.bold,
                                 fontSize: 14,
                               ),
                             ),
                             const SizedBox(height: 20),
                             const Text(
-                              'Total to be paid:',
+                              'Priority you chose:',
                               textAlign: TextAlign.left,
                               style: TextStyle(
                                 color: Colors.white,
@@ -157,27 +189,63 @@ class OnChainPaymentConfirmationView extends StatelessWidget {
                                 fontSize: 14,
                               ),
                             ),
-                            const Expanded(
-                              flex: 1,
-                              child: Text(
-                                '600 sats',
-                                textAlign: TextAlign.left,
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 14,
-                                ),
+                            Text(
+                              '${state.selectedPriority.name} (confirmation in ~ ${state.selectedPriority.confirmationTime} minutes)',
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                color: Color.fromARGB(255, 142, 195, 238),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14,
                               ),
                             ),
                           ],
                         ),
-                      ),
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: Container(),
-                    ),
-                  ],
+                        Expanded(
+                          flex: 1,
+                          child: Container(
+                            alignment: Alignment.center,
+                            child: Column(
+                              children: [
+                                Expanded(child: Container()),
+                                const Text(
+                                  'Amount to be deducted from your account:',
+                                  textAlign: TextAlign.left,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontStyle: FontStyle.italic,
+                                    fontSize: 14,
+                                  ),
+                                ),
+                                RichText(
+                                  text: TextSpan(
+                                    text:
+                                        '${state.amountInSats + state.contractedTotalFee}',
+                                    style: const TextStyle(
+                                      color: Color.fromARGB(255, 231, 241, 123),
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 22,
+                                    ),
+                                    children: [
+                                      const TextSpan(
+                                        text: ' sats',
+                                        style: TextStyle(
+                                          color: Color.fromARGB(
+                                              255, 231, 241, 123),
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 14,
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                                Expanded(child: Container()),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    );
+                  },
                 ),
               ),
               Padding(
@@ -198,12 +266,12 @@ class OnChainPaymentConfirmationView extends StatelessWidget {
                             return ElevatedButton.icon(
                               onPressed: () {},
                               icon: const Icon(
-                                Icons.send,
+                                Icons.check,
                                 size: 20,
                                 textDirection: TextDirection.ltr,
                               ),
                               label: const Text(
-                                'SEND PAYMENT',
+                                'CONFIRM PAYMENT',
                                 style: TextStyle(fontSize: 14),
                               ),
                               style: ElevatedButton.styleFrom(

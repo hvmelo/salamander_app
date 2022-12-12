@@ -45,9 +45,9 @@ class OnChainPaymentConfirmationCubit
             emit(state.copyWith(
                 status: OnChainPaymentConfirmationStatus.valueChanged,
                 errorMessage:
-                    '''Your balance has changed and the current sum is 
-                             insufficient for this payment. Please select a new 
-                             amount or a lower fee priority.'''));
+                    '''Your balance has changed and the current sum is insufficient for this payment. Please select a new amount or a lower fee priority.'''));
+          } else {
+            emit(state.copyWith(currentBalance: balanceInSats));
           }
         } else {
           emit(state.copyWith(
@@ -67,8 +67,7 @@ class OnChainPaymentConfirmationCubit
         emit(state.copyWith(
             status: OnChainPaymentConfirmationStatus.valueChanged,
             errorMessage:
-                '''Applied fees have changed. Please select a new amount or 
-                   a lower fee priority again.'''));
+                '''Applied fees have changed. Please select a new amount or a lower fee priority again.'''));
       }
     });
   }
