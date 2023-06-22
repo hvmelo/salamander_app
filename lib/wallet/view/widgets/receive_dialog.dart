@@ -35,7 +35,7 @@ class ReceiveCoinsDialog extends StatelessWidget {
             ),
             Container(
               color: Colors.white,
-              child: QrImage(
+              child: QrImageView(
                 data: 'bitcoin:$_address',
                 version: QrVersions.auto,
                 size: 200.0,
@@ -57,17 +57,17 @@ class ReceiveCoinsDialog extends StatelessWidget {
                       onTap: () => Clipboard.setData(
                         ClipboardData(text: _address),
                       ),
-                      child: Row(
+                      child: const Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Text(
+                          Text(
                             'Copy to clipboard',
                             style: TextStyle(
                               color: Colors.blue,
                             ),
                           ),
-                          const SizedBox(width: 5),
-                          const Icon(
+                          SizedBox(width: 5),
+                          Icon(
                             Icons.copy,
                             color: Colors.blue,
                             size: 20,
@@ -100,7 +100,7 @@ class ReceiveCoinsDialog extends StatelessWidget {
                       style: TextStyle(fontSize: 14),
                     ),
                     style: ElevatedButton.styleFrom(
-                      primary: Colors.blueGrey[900],
+                      backgroundColor: Colors.blueGrey[900],
                     ),
                   ),
                 ],

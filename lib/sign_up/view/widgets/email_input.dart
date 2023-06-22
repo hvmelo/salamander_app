@@ -24,7 +24,7 @@ class EmailInput extends StatelessWidget {
               ),
               labelText: 'Email',
               helperText: '',
-              errorText: state.email.invalid ? 'invalid email' : null,
+              errorText: state.email.displayError != null ? 'invalid email' : null,
               labelStyle: const TextStyle(
                 color: Colors.white,
               ),

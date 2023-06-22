@@ -6,7 +6,7 @@ import 'lightning_invoice.dart';
 
 class BTCInputParser {
   static Object? parseInput(String input) {
-    if (Address.validateAddress(input, testnet)) {
+    if (validateAddress(input, testnet)) {
       return BitcoinAddress(address: input);
     } else {
       try {

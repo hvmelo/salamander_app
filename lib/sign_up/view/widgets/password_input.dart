@@ -18,14 +18,14 @@ class PasswordInput extends StatelessWidget {
                 context.read<SignUpCubit>().passwordChanged(password),
             style: const TextStyle(color: Colors.white),
             obscureText: true,
-            decoration: InputDecoration(
-              hintStyle: const TextStyle(
+            decoration: const  InputDecoration(
+              hintStyle: TextStyle(
                 color: Colors.white,
               ),
               labelText: 'Password',
               helperText: '',
-              errorText: state.password.invalid ? 'invalid password' : null,
-              labelStyle: const TextStyle(
+              //errorText: state.password.displayError != null ? 'invalid password' : null,
+              labelStyle: TextStyle(
                 color: Colors.white,
               ),
             ),

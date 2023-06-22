@@ -28,7 +28,7 @@ class ConfirmedPasswordInput extends StatelessWidget {
               labelText: 'Confirm Password',
               helperText: '',
               errorText:
-                  state.password.invalid ? 'passwords do not match' : null,
+                  state.confirmedPassword.displayError != null ? 'passwords do not match' : null,
               labelStyle: const TextStyle(
                 color: Colors.white,
               ),

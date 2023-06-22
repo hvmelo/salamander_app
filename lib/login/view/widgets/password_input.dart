@@ -24,7 +24,7 @@ class PasswordInput extends StatelessWidget {
               ),
               labelText: 'Password',
               helperText: '',
-              errorText: state.password.invalid ? 'invalid password' : null,
+              errorText: state.password.displayError != null ? 'invalid password' : null,
               labelStyle: const TextStyle(
                 color: Colors.white,
               ),

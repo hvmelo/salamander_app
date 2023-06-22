@@ -9,9 +9,8 @@ class LoginButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<LoginCubit, LoginState>(
-      buildWhen: (previous, current) => previous.status != current.status,
       builder: (context, state) {
-        if (state.status.isSubmissionInProgress) {
+        if (state.status.isInProgress) {
           return const CircularProgressIndicator();
         } else {
           return Container(
@@ -23,7 +22,7 @@ class LoginButton extends StatelessWidget {
             ),
             child: MaterialButton(
                 key: const Key('loginForm_continue_raisedButton'),
-                onPressed: state.status.isValidated
+                onPressed: state.isValid
                     ? () => context.read<LoginCubit>().logInWithCredentials()
                     : null,
                 child: const Text('Login')),

@@ -84,7 +84,7 @@ class QRScanView extends StatelessWidget {
                                   style: TextStyle(fontSize: 14),
                                 ),
                                 style: ElevatedButton.styleFrom(
-                                  primary: Colors.blueGrey[900],
+                                  backgroundColor: Colors.blueGrey[900],
                                 ),
                               ),
                             );
